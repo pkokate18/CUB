@@ -1,0 +1,1686 @@
+# downloaded all the genomes from the NCBI website into one folder : genomes...This is literally a right click download and transfer using WINSCP into Unix
+
+# downloaded the CDS from NCBI and renamed them with the appropriate species names
+# Obtaining coding sequences
+ esearch -query "GCF_000005925.1" -db nucleotide | efetch -format fasta_cds_na>D.willistoni_CDS 
+ esearch -query "GCF_003285905.1" -db nucleotide | efetch -format fasta_cds_na>D.hydei_CDS
+ esearch -query "GCF_003285875.2" -db nucleotide | efetch -format fasta_cds_na>D.novamexicana_CDS
+ esearch -query "GCF_000005245.1" -db nucleotide | efetch -format fasta_cds_na>D.virilis_CDS
+ esearch -query "GCF_000001765.3" -db nucleotide | efetch -format fasta_cds_na>D.pseudoobscura_CDS
+ esearch -query "GCF_000269505.1" -db nucleotide | efetch -format fasta_cds_na>D.miranda_CDS
+ esearch -query "GCF_000233415.1" -db nucleotide | efetch -format fasta_cds_na>D.biarmipes_CDS
+ esearch -query "GCF_000224235.1" -db nucleotide | efetch -format fasta_cds_na>D.takahashii_CDS
+ esearch -query "GCF_000005215.3" -db nucleotide | efetch -format fasta_cds_na>D.sechellia_CDS
+ esearch -query "GCF_003286085.1" -db nucleotide | efetch -format fasta_cds_na>D.persimilis_CDS
+ esearch -query "GCF_003286155.1" -db nucleotide | efetch -format fasta_cds_na>D.erecta_CDS
+ esearch -query "GCF_000005115.1" -db nucleotide | efetch -format fasta_cds_na>D.ananassae_CDS
+ esearch -query "GCF_000754195.2" -db nucleotide | efetch -format fasta_cds_na>D.simulans_CDS
+ esearch -query "GCF_000001215.4" -db nucleotide | efetch -format fasta_cds_na>D.melanogaster_CDS
+ esearch -query "GCF_000472105.1" -db nucleotide | efetch -format fasta_cds_na>D.suzukii_CDS
+ esearch -query "GCF_002093755.1" -db nucleotide | efetch -format fasta_cds_na>D.serrata_CDS
+ esearch -query "GCF_000236285.1" -db nucleotide | efetch -format fasta_cds_na>D.bipectinata_CDS
+ esearch -query "GCF_001277935.1" -db nucleotide | efetch -format fasta_cds_na>D.busckii_CDS
+ esearch -query "GCF_000005175.2" -db nucleotide | efetch -format fasta_cds_na>D.mojavensis_CDS
+ esearch -query "GCF_001654015.2" -db nucleotide | efetch -format fasta_cds_na>D.navojoa_CDS
+ esearch -query "GCF_001654025.1" -db nucleotide | efetch -format fasta_cds_na>D.arizonae_CDS
+ esearch -query "GCF_000005155.2" -db nucleotide | efetch -format fasta_cds_na>D.grimshawi_CDS
+ esearch -query "GCF_000220665.1" -db nucleotide | efetch -format fasta_cds_na>D.ficusphila_CDS
+ esearch -query "GCF_000224195.1" -db nucleotide | efetch -format fasta_cds_na>D.elegans_CDS
+ esearch -query "GCF_000224215.1" -db nucleotide | efetch -format fasta_cds_na>D.kikkawai_CDS
+ esearch -query "GCF_000005975.2" -db nucleotide | efetch -format fasta_cds_na>D.yakuba_CDS
+ esearch -query "GCF_002217835.1" -db nucleotide | efetch -format fasta_cds_na>D.obscura_CDS
+ esearch -query "GCF_000236325.1" -db nucleotide | efetch -format fasta_cds_na>D.eugracilis_CDS
+ esearch -query "GCF_000236305.1" -db nucleotide | efetch -format fasta_cds_na>D.rhopaloa_CDS
+
+# Calculating average GC content
+# for the whole genome
+seqkit fx2tab   --gc GCF_003285975.2_DanaRS2.1_genomic.fna.gz > ananassaeGC.csv
+seqkit fx2tab   --gc GCF_003369915.1_D.miranda_PacBio2.1_genomic.fna.gz > mirandaGC.csv
+seqkit fx2tab   --gc GCF_000005925.1_dwil_caf1_genomic.fna.gz > willistoniGC.csv
+seqkit fx2tab   --gc GCF_000472105.1_Dsuzukii.v01_genomic.fna.gz > suzukiiGC.csv
+seqkit fx2tab   --gc GCF_000236305.1_Drho_2.0_genomic.fna.gz > rhopholoaGC.csv
+seqkit fx2tab   --gc GCF_000224235.1_Dtak_2.0_genomic.fna.gz > takahashiiGC.csv
+seqkit fx2tab   --gc GCF_002093755.1_Dser1.0_genomic.fna.gz > serrataGC.csv
+seqkit fx2tab   --gc GCF_003286085.1_DperRS2_genomic.fna.gz > persimilisGC.csv
+seqkit fx2tab   --gc GCF_000005175.2_dmoj_caf1_genomic.fna.gz > mojavensisGC.csv
+seqkit fx2tab   --gc GCF_003285735.1_DvirRS2_genomic.fna.gz > virilisGC.csv
+seqkit fx2tab   --gc GCF_002217835.1_Dobs_1.0_genomic.fna.gz > obscuraGC.csv
+seqkit fx2tab   --gc GCF_000224195.1_Dele_2.0_genomic.fna.gz > elegansGC.csv
+seqkit fx2tab   --gc GCF_000233415.1_Dbia_2.0_genomic.fna.gz > biarmipesGC.csv
+seqkit fx2tab   --gc GCF_000005155.2_dgri_caf1_genomic.fna.gz > grimshawiGC.csv
+seqkit fx2tab   --gc GCF_000236285.1_Dbip_2.0_genomic.fna.gz > bipectinataGC.csv
+seqkit fx2tab   --gc GCF_003285875.2_DnovRS2.1_genomic.fna.gz > novamexicanaGC.csv
+seqkit fx2tab   --gc GCF_000224215.1_Dkik_2.0_genomic.fna.gz > kikkawaiGC.csv
+seqkit fx2tab   --gc GCF_000005975.2_dyak_caf1_genomic.fna.gz > yakubaGC.csv
+seqkit fx2tab   --gc GCF_000236325.1_Deug_2.0_genomic.fna.gz > eugracilisGC.csv
+seqkit fx2tab   --gc GCF_009870125.1_UCI_Dpse_MV25_genomic.fna.gz > pseudoobscuraGC.csv
+seqkit fx2tab   --gc GCF_000220665.1_Dfic_2.0_genomic.fna.gz > ficusphilaGC.csv
+seqkit fx2tab   --gc GCF_003285905.1_DhydRS2_genomic.fna.gz > hydeiGC.csv
+seqkit fx2tab   --gc GCF_001654015.2_UFRJ_Dnav_4.2_genomic.fna.gz > navojoaGC.csv
+seqkit fx2tab   --gc GCF_004382195.1_ASM438219v1_genomic.fna.gz > sechelliaGC.csv
+seqkit fx2tab   --gc GCF_003286155.1_DereRS2_genomic.fna.gz > erectaGC.csv 
+seqkit fx2tab   --gc GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz > melanogasterGC.csv
+seqkit fx2tab   --gc GCF_001654025.1_ASM165402v1_genomic.fna.gz > arizonaeGC.csv
+seqkit fx2tab   --gc GCF_000754195.2_ASM75419v2_genomic.fna.gz > simulansGC.csv
+seqkit fx2tab   --gc GCF_011750605.1_ASM1175060v1_genomic.fna.gz > busckiiGC.csv
+This command was run for each species to get the GC content 
+ # in notepad...i first replaced all , with ; and then replaced all CDS] with CDS],....this allows there to be only two columns in the csv file...one with all the other stuff...the second column has the GC vlaues...a little playing in excel gets us the GC values all cleaned up (the TEXT TO XOLUMN thing) and then take the average GC percentage 
+#for the coding sequences
+seqkit fx2tab  --name  --gc D.navojoa_CDS > navojoaCDS_GC.csv
+seqkit fx2tab  --name --gc D.willistoni_CDS  > willistoniCDS_GC.csv
+seqkit fx2tab  --name --gc D.hydei_CDS > hydeiCDS_GC.csv
+seqkit fx2tab  --name --gc D.novamexicana_CDS > novamexicanaCDS_GC.csv
+seqkit fx2tab  --name --gc D.virilis_CDS > virilisCDS_GC.csv
+seqkit fx2tab  --name --gc D.pseudoobscura_CDS > pseudoobscuraCDS_GC.csv
+seqkit fx2tab  --name --gc D.miranda_CDS > mirandaCDS_GC.csv
+seqkit fx2tab  --name --gc D.biarmipes_CDS > biarmipesCDS_GC.csv
+seqkit fx2tab  --name --gc D.takahashii_CDS > takahashiiCDS_GC.csv
+seqkit fx2tab  --name --gc D.sechellia_CDS > sechelliaCDS_GC.csv
+seqkit fx2tab  --name --gc D.persimilis_CDS > persimilisCDS_GC.csv
+seqkit fx2tab  --name --gc D.erecta_CDS > erectaCDS_GC.csv
+seqkit fx2tab  --name --gc D.ananassae_CDS > ananassaeCDS_GC.csv
+seqkit fx2tab  --name --gc D.simulans_CDS > simulansCDS_GC.csv
+seqkit fx2tab  --name --gc D.melanogaster_CDS > melanogasterCDS_GC.csv
+seqkit fx2tab  --name --gc D.suzukii_CDS > suzukiiCDS_GC.csv
+seqkit fx2tab  --name --gc D.serrata_CDS > serrataCDS_GC.csv
+seqkit fx2tab  --name --gc D.bipectinata_CDS > bipectinataCDS_GC.csv
+seqkit fx2tab  --name --gc D.busckii_CDS > busckiiCDS_GC.csv
+seqkit fx2tab  --name --gc D.mojavensis_CDS > mojavensisCDS_GC.csv
+seqkit fx2tab  --name --gc D.arizonae_CDS > arizonaeCDS_GC.csv
+seqkit fx2tab  --name --gc D.grimshawi_CDS > grimshawiCDS_GC.csv
+seqkit fx2tab  --name --gc D.ficusphila_CDS > ficusphilaCDS_GC.csv
+seqkit fx2tab  --name --gc D.elegans_CDS > elegansCDS_GC.csv
+seqkit fx2tab  --name --gc D.kikkawai_CDS > kikkawaiCDS_GC.csv
+seqkit fx2tab  --name --gc D.yakuba_CDS > yakubaCDS_GC.csv
+seqkit fx2tab  --name --gc D.obscura_CDS > obscuraCDS_GC.csv
+seqkit fx2tab  --name --gc D.eugracilis_CDS > eugracilisCDS_GC.csv
+ # in notepad...i first replaced all , with ; and then replaced all CDS] with CDS],....this allows there to be only two columns in the csv file...one with all the other stuff...the second column has the GC vlaues...a little playing in excel gets us the GC values all cleaned up (the TEXT TO XOLUMN thing) and then take the average GC percentage 
+
+
+
+# to get orthologous genes for further analysis
+
+#downloaded all proteome sequences from the NCBI website into one folder : proteomes
+gunzip *.gz
+# rename all the files appropriately with the species names
+
+#run orthofinder
+orthofinder -S diamond -f proteomes
+#Output files include "SingleCopyOrthogroups.txt" and "Orthogroups.csv"
+#Processing to get one consolidated file 
+singlecopy<-read_csv("SingleCopyOrthogroups.txt", col_names= FALSE)
+singlecopy<-as.dataframe(singlecopy)
+
+orthogroups1<-read_tsv("Orthogroups.csv")
+
+single_copy_ortho<-merge(singlecopy, orthogroups1, by.x= "X1", by.y= "X1", all=FALSE)
+write.csv(single_copy_ortho, 'singlecopyortho.csv') # converting dataframe into csv
+# the single-copy orthologous genes are used for further synonymous codon usage analysis (accession numbers for these genes for all the 29 species is provided in Supplementary Table 1)
+cat singlecopyortho.csv | sed 's/"//g' > singlecopyorthoclean.csv # getting rid of ", the efetch does not recognize "XP...whatever
+
+# commands to get the gene sequences from the accession numbers found in the singlecopyortho.csv file...each file is for one species and 668 genes
+cat singlecopyortho.csv | sed 's/"//g' > singlecopyorthoclean.csv # getting rid of ", the efetch does not recognize "XP...whatever
+awk -F "," '{print $3}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> ananassae_ortho.fasta; done
+awk -F "," '{print $4}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> arizonae_ortho.fasta; done
+awk -F "," '{print $5}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> biarmipes_ortho.fasta; done
+awk -F "," '{print $6}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> bipectinata_ortho.fasta; done
+awk -F "," '{print $7}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> busckii_ortho.fasta; done
+awk -F "," '{print $8}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> elegans_ortho.fasta; done
+awk -F "," '{print $9}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> erecta_ortho.fasta; done
+awk -F "," '{print $10}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> eugracilis_ortho.fasta; done
+awk -F "," '{print $11}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> ficusphila_ortho.fasta; done
+awk -F "," '{print $12}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> grimshawi_ortho.fasta; done
+awk -F "," '{print $13}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> hydei_ortho.fasta; done
+awk -F "," '{print $14}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> kikkawai_ortho.fasta; done
+awk -F "," '{print $15}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> melanogaster_ortho.fasta; done
+awk -F "," '{print $16}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> miranda_ortho.fasta; done
+awk -F "," '{print $17}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> mojavensis_ortho.fasta; done
+awk -F "," '{print $18}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> navojoa_ortho.fasta; done
+awk -F "," '{print $19}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> novamexicana_ortho.fasta; done
+awk -F "," '{print $20}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> obscura_ortho.fasta; done
+awk -F "," '{print $21}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> persimilis_ortho.fasta; done
+awk -F "," '{print $22}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> pseudoobscura_ortho.fasta; done
+awk -F "," '{print $23}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> rhopaloa_ortho.fasta; done
+awk -F "," '{print $24}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> sechellia_ortho.fasta; done
+awk -F "," '{print $25}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> serrata_ortho.fasta; done
+awk -F "," '{print $26}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> simulans_ortho.fasta; done
+awk -F "," '{print $27}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> suzukii_ortho.fasta; done
+awk -F "," '{print $28}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> takahashii_ortho.fasta; done
+awk -F "," '{print $29}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> virilis_ortho.fasta; done
+awk -F "," '{print $30}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> willistoni_ortho.fasta; done
+awk -F "," '{print $31}' singlecopyorthoclean.csv | while IFS= read -r line; do efetch -id $line -db sequences -format fasta_cds_na >> yakuba_ortho.fasta; done
+
+
+# Getting the ENC values for the orthologous genes (IN RSTUDIO)
+install.packages("rnaseqWrapper")
+install.packages("seqinr")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+  install.packages("BiocManager")
+BiocManager::install("coRdon")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("ORFik")
+install.packages("qpcR")
+install.packages("reshape2")
+install.packages("plyr")
+install.packages("readxl")
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("ggpmisc")
+library(ggpmisc)
+library(readxl)
+library(plyr)
+library(reshape2)
+library(qpcR)
+library(ORFik)
+library(seqinr)
+library(coRdon)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+setwd("home/Special_topics/") # home laptop...go to sesssion .....
+getwd()
+rm(list = ls())
+
+
+ananassae_ortho.fasta<-readSet(file="ananassae_ortho.fasta")
+ananassae_ortho.fasta_cu<-codonTable(ananassae_ortho.fasta)
+ananassae_ortho.fasta_cc<-codonCounts(ananassae_ortho.fasta_cu) # 
+ananassae_ortho.fasta_MILC<-MILC(ananassae_ortho.fasta_cu)
+ananassae_ortho.fasta_SCUO<-SCUO(ananassae_ortho.fasta_cu)# 
+ENC_ananassae_ortho.fasta<-ENC(ananassae_ortho.fasta_cu)
+ENCnotprime_ananassae_ortho.fasta<-ENC(ananassae_ortho.fasta_cu)
+ENC_ananassae_ortho.fasta <-as.data.frame(ENC_ananassae_ortho.fasta)
+ENC_ananassae_ortho.fasta <-rename(ENC_ananassae_ortho.fasta, Dana = ENC_ananassae_ortho.fasta)
+
+
+arizonae_ortho.fasta<- readSet(file="arizonae_ortho.fasta")
+arizonae_ortho.fasta_cu<-codonTable(arizonae_ortho.fasta)
+arizonae_ortho.fasta_cc<-codonCounts(arizonae_ortho.fasta_cu) # 
+arizonae_ortho.fasta_MILC<-MILC(arizonae_ortho.fasta_cu) # 
+ENC_arizonae_ortho.fasta<-ENC(arizonae_ortho.fasta_cu)
+ENC_arizonae_ortho.fasta <-as.data.frame(ENC_arizonae_ortho.fasta)
+ENC_arizonae_ortho.fasta <-rename(ENC_arizonae_ortho.fasta, Dari = ENC_arizonae_ortho.fasta)
+
+biarmipes_ortho.fasta<- readSet(file="biarmipes_ortho.fasta")
+biarmipes_ortho.fasta_cu<-codonTable(biarmipes_ortho.fasta)
+biarmipes_ortho.fasta_cc<-codonCounts(biarmipes_ortho.fasta_cu) # 
+biarmipes_ortho.fasta_MILC<-MILC(biarmipes_ortho.fasta_cu) # 
+ENC_biarmipes_ortho.fasta<-ENC(biarmipes_ortho.fasta_cu)
+ENC_biarmipes_ortho.fasta <-as.data.frame(ENC_biarmipes_ortho.fasta)
+ENC_biarmipes_ortho.fasta <-rename(ENC_biarmipes_ortho.fasta, Dbia = ENC_biarmipes_ortho.fasta)
+
+bipectinata_ortho.fasta<- readSet(file="bipectinata_ortho.fasta")
+bipectinata_ortho.fasta_cu<-codonTable(bipectinata_ortho.fasta)
+bipectinata_ortho.fasta_cc<-codonCounts(bipectinata_ortho.fasta_cu) # 
+bipectinata_ortho.fasta_MILC<-MILC(bipectinata_ortho.fasta_cu) # 
+ENC_bipectinata_ortho.fasta<-ENC(bipectinata_ortho.fasta_cu)
+ENC_bipectinata_ortho.fasta <-as.data.frame(ENC_bipectinata_ortho.fasta)
+ENC_bipectinata_ortho.fasta <-rename(ENC_bipectinata_ortho.fasta, Dbip = ENC_bipectinata_ortho.fasta)
+
+busckii_ortho.fasta<- readSet(file="busckii_ortho.fasta")
+busckii_ortho.fasta_cu<-codonTable(busckii_ortho.fasta)
+busckii_ortho.fasta_cc<-codonCounts(busckii_ortho.fasta_cu) # 
+busckii_ortho.fasta_MILC<-MILC(busckii_ortho.fasta_cu) # 
+ENC_busckii_ortho.fasta<-ENC(busckii_ortho.fasta_cu)
+ENC_busckii_ortho.fasta <-as.data.frame(ENC_busckii_ortho.fasta)
+ENC_busckii_ortho.fasta <-rename(ENC_busckii_ortho.fasta, Dbus = ENC_busckii_ortho.fasta)
+
+
+elegans_ortho.fasta<- readSet(file="elegans_ortho.fasta")
+elegans_ortho.fasta_cu<-codonTable(elegans_ortho.fasta)
+elegans_ortho.fasta_cc<-codonCounts(elegans_ortho.fasta_cu) # 
+elegans_ortho.fasta_MILC<-MILC(elegans_ortho.fasta_cu) # 
+ENC_elegans_ortho.fasta<-ENC(elegans_ortho.fasta_cu)
+ENC_elegans_ortho.fasta <-as.data.frame(ENC_elegans_ortho.fasta)
+ENC_elegans_ortho.fasta <-rename(ENC_elegans_ortho.fasta, Dele = ENC_elegans_ortho.fasta)
+
+erecta_ortho.fasta<- readSet(file="erecta_ortho.fasta")
+erecta_ortho.fasta_cu<-codonTable(erecta_ortho.fasta)
+erecta_ortho.fasta_cc<-codonCounts(erecta_ortho.fasta_cu) # 
+erecta_ortho.fasta_MILC<-MILC(erecta_ortho.fasta_cu) # 
+ENC_erecta_ortho.fasta<-ENC(erecta_ortho.fasta_cu)
+ENC_erecta_ortho.fasta <-as.data.frame(ENC_erecta_ortho.fasta)
+ENC_erecta_ortho.fasta <-rename(ENC_erecta_ortho.fasta, Dere = ENC_erecta_ortho.fasta)
+
+eugracilis_ortho.fasta<- readSet(file="eugracilis_ortho.fasta")
+eugracilis_ortho.fasta_cu<-codonTable(eugracilis_ortho.fasta)
+eugracilis_ortho.fasta_cc<-codonCounts(eugracilis_ortho.fasta_cu) # 
+eugracilis_ortho.fasta_MILC<-MILC(eugracilis_ortho.fasta_cu) # 
+ENC_eugracilis_ortho.fasta<-ENC(eugracilis_ortho.fasta_cu)
+ENC_eugracilis_ortho.fasta <-as.data.frame(ENC_eugracilis_ortho.fasta)
+ENC_eugracilis_ortho.fasta <-rename(ENC_eugracilis_ortho.fasta, Deug = ENC_eugracilis_ortho.fasta)
+
+ficusphila_ortho.fasta<- readSet(file="ficusphila_ortho.fasta")
+ficusphila_ortho.fasta_cu<-codonTable(ficusphila_ortho.fasta)
+ficusphila_ortho.fasta_cc<-codonCounts(ficusphila_ortho.fasta_cu) # 
+ficusphila_ortho.fasta_MILC<-MILC(ficusphila_ortho.fasta_cu) # 
+ENC_ficusphila_ortho.fasta<-ENC(ficusphila_ortho.fasta_cu)
+ENC_ficusphila_ortho.fasta <-as.data.frame(ENC_ficusphila_ortho.fasta)
+ENC_ficusphila_ortho.fasta <-rename(ENC_ficusphila_ortho.fasta, Dfic = ENC_ficusphila_ortho.fasta)
+
+grimshawi_ortho.fasta<- readSet(file="grimshawi_ortho.fasta")
+grimshawi_ortho.fasta_cu<-codonTable(grimshawi_ortho.fasta)
+grimshawi_ortho.fasta_cc<-codonCounts(grimshawi_ortho.fasta_cu) # 
+grimshawi_ortho.fasta_MILC<-MILC(grimshawi_ortho.fasta_cu) # 
+ENC_grimshawi_ortho.fasta<-ENC(grimshawi_ortho.fasta_cu)
+ENC_grimshawi_ortho.fasta <-as.data.frame(ENC_grimshawi_ortho.fasta)
+ENC_grimshawi_ortho.fasta <-rename(ENC_grimshawi_ortho.fasta, Dgri = ENC_grimshawi_ortho.fasta)
+
+hydei_ortho.fasta<- readSet(file="hydei_ortho.fasta")
+hydei_ortho.fasta_cu<-codonTable(hydei_ortho.fasta)
+hydei_ortho.fasta_cc<-codonCounts(hydei_ortho.fasta_cu) # 
+hydei_ortho.fasta_MILC<-MILC(hydei_ortho.fasta_cu) # 
+ENC_hydei_ortho.fasta<-ENC(hydei_ortho.fasta_cu)
+ENC_hydei_ortho.fasta <-as.data.frame(ENC_hydei_ortho.fasta)
+ENC_hydei_ortho.fasta <-rename(ENC_hydei_ortho.fasta, Dhyd = ENC_hydei_ortho.fasta)
+
+kikkawai_ortho.fasta<- readSet(file="kikkawai_ortho.fasta")
+kikkawai_ortho.fasta_cu<-codonTable(kikkawai_ortho.fasta)
+kikkawai_ortho.fasta_cc<-codonCounts(kikkawai_ortho.fasta_cu) # 
+kikkawai_ortho.fasta_MILC<-MILC(kikkawai_ortho.fasta_cu) # 
+ENC_kikkawai_ortho.fasta<-ENC(kikkawai_ortho.fasta_cu)
+ENC_kikkawai_ortho.fasta <-as.data.frame(ENC_kikkawai_ortho.fasta)
+ENC_kikkawai_ortho.fasta <-rename(ENC_kikkawai_ortho.fasta, Dkik = ENC_kikkawai_ortho.fasta)
+
+melanogaster_ortho.fasta<- readSet(file="melanogaster_ortho.fasta")
+melanogaster_ortho.fasta_cu<-codonTable(melanogaster_ortho.fasta)
+melanogaster_ortho.fasta_cc<-codonCounts(melanogaster_ortho.fasta_cu) # 
+melanogaster_ortho.fasta_MILC<-MILC(melanogaster_ortho.fasta_cu) # 
+ENC_melanogaster_ortho.fasta<-ENC(melanogaster_ortho.fasta_cu)
+ENC_melanogaster_ortho.fasta <-as.data.frame(ENC_melanogaster_ortho.fasta)
+ENC_melanogaster_ortho.fasta <-rename(ENC_melanogaster_ortho.fasta, Dmel = ENC_melanogaster_ortho.fasta)
+
+miranda_ortho.fasta<- readSet(file="miranda_ortho.fasta")
+miranda_ortho.fasta_cu<-codonTable(miranda_ortho.fasta)
+miranda_ortho.fasta_cc<-codonCounts(miranda_ortho.fasta_cu) # 
+miranda_ortho.fasta_MILC<-MILC(miranda_ortho.fasta_cu) # 
+ENC_miranda_ortho.fasta<-ENC(miranda_ortho.fasta_cu)
+ENC_miranda_ortho.fasta <-as.data.frame(ENC_miranda_ortho.fasta)
+ENC_miranda_ortho.fasta <-rename(ENC_miranda_ortho.fasta, Dmir = ENC_miranda_ortho.fasta)
+
+mojavensis_ortho.fasta<- readSet(file="mojavensis_ortho.fasta")
+mojavensis_ortho.fasta_cu<-codonTable(mojavensis_ortho.fasta)
+mojavensis_ortho.fasta_cc<-codonCounts(mojavensis_ortho.fasta_cu) # 
+mojavensis_ortho.fasta_MILC<-MILC(mojavensis_ortho.fasta_cu) # 
+ENC_mojavensis_ortho.fasta<-ENC(mojavensis_ortho.fasta_cu)
+ENC_mojavensis_ortho.fasta <-as.data.frame(ENC_mojavensis_ortho.fasta)
+ENC_mojavensis_ortho.fasta <-rename(ENC_mojavensis_ortho.fasta, Dmoj = ENC_mojavensis_ortho.fasta)
+
+navojoa_ortho.fasta<- readSet(file="navojoa_ortho.fasta")
+navojoa_ortho.fasta_cu<-codonTable(navojoa_ortho.fasta)
+navojoa_ortho.fasta_cc<-codonCounts(navojoa_ortho.fasta_cu) # 
+navojoa_ortho.fasta_MILC<-MILC(navojoa_ortho.fasta_cu) # 
+ENC_navojoa_ortho.fasta<-ENC(navojoa_ortho.fasta_cu)
+ENC_navojoa_ortho.fasta <-as.data.frame(ENC_navojoa_ortho.fasta)
+ENC_navojoa_ortho.fasta <-rename(ENC_navojoa_ortho.fasta, Dnav = ENC_navojoa_ortho.fasta)
+
+
+novamexicana_ortho.fasta<- readSet(file="novamexicana_ortho.fasta")
+novamexicana_ortho.fasta_cu<-codonTable(novamexicana_ortho.fasta)
+novamexicana_ortho.fasta_cc<-codonCounts(novamexicana_ortho.fasta_cu) # 
+novamexicana_ortho.fasta_MILC<-MILC(novamexicana_ortho.fasta_cu) # 
+ENC_novamexicana_ortho.fasta<-ENC(novamexicana_ortho.fasta_cu)
+ENC_novamexicana_ortho.fasta <-as.data.frame(ENC_novamexicana_ortho.fasta)
+ENC_novamexicana_ortho.fasta <-rename(ENC_novamexicana_ortho.fasta, Dnov = ENC_novamexicana_ortho.fasta)
+
+
+
+
+
+obscura_ortho.fasta<- readSet(file="obscura_ortho.fasta")
+obscura_ortho.fasta_cu<-codonTable(obscura_ortho.fasta)
+obscura_ortho.fasta_cc<-codonCounts(obscura_ortho.fasta_cu) # 
+obscura_ortho.fasta_MILC<-MILC(obscura_ortho.fasta_cu) # 
+ENC_obscura_ortho.fasta<-ENC(obscura_ortho.fasta_cu)
+ENC_obscura_ortho.fasta <-as.data.frame(ENC_obscura_ortho.fasta)
+ENC_obscura_ortho.fasta <-rename(ENC_obscura_ortho.fasta, Dobs = ENC_obscura_ortho.fasta)
+
+persimilis_ortho.fasta<- readSet(file="persimilis_ortho.fasta")
+persimilis_ortho.fasta_cu<-codonTable(persimilis_ortho.fasta)
+persimilis_ortho.fasta_cc<-codonCounts(persimilis_ortho.fasta_cu) # 
+persimilis_ortho.fasta_MILC<-MILC(persimilis_ortho.fasta_cu) # 
+ENC_persimilis_ortho.fasta<-ENC(persimilis_ortho.fasta_cu)
+ENC_persimilis_ortho.fasta <-as.data.frame(ENC_persimilis_ortho.fasta)
+ENC_persimilis_ortho.fasta <-rename(ENC_persimilis_ortho.fasta, Dper = ENC_persimilis_ortho.fasta)
+
+pseudoobscura_ortho.fasta<- readSet(file="pseudoobscura_ortho.fasta")
+pseudoobscura_ortho.fasta_cu<-codonTable(pseudoobscura_ortho.fasta)
+pseudoobscura_ortho.fasta_cc<-codonCounts(pseudoobscura_ortho.fasta_cu) # 
+pseudoobscura_ortho.fasta_MILC<-MILC(pseudoobscura_ortho.fasta_cu) # 
+ENC_pseudoobscura_ortho.fasta<-ENC(pseudoobscura_ortho.fasta_cu)
+ENC_pseudoobscura_ortho.fasta <-as.data.frame(ENC_pseudoobscura_ortho.fasta)
+ENC_pseudoobscura_ortho.fasta <-rename(ENC_pseudoobscura_ortho.fasta, Dpse = ENC_pseudoobscura_ortho.fasta)
+
+rhopaloa_ortho.fasta<- readSet(file="rhopaloa_ortho.fasta")
+rhopaloa_ortho.fasta_cu<-codonTable(rhopaloa_ortho.fasta)
+rhopaloa_ortho.fasta_cc<-codonCounts(rhopaloa_ortho.fasta_cu) # 
+rhopaloa_ortho.fasta_MILC<-MILC(rhopaloa_ortho.fasta_cu) # 
+ENC_rhopaloa_ortho.fasta<-ENC(rhopaloa_ortho.fasta_cu)
+ENC_rhopaloa_ortho.fasta <-as.data.frame(ENC_rhopaloa_ortho.fasta)
+ENC_rhopaloa_ortho.fasta <-rename(ENC_rhopaloa_ortho.fasta, Drho = ENC_rhopaloa_ortho.fasta)
+
+sechellia_ortho.fasta<- readSet(file="sechellia_ortho.fasta")
+sechellia_ortho.fasta_cu<-codonTable(sechellia_ortho.fasta)
+sechellia_ortho.fasta_cc<-codonCounts(sechellia_ortho.fasta_cu) # 
+sechellia_ortho.fasta_MILC<-MILC(sechellia_ortho.fasta_cu) # 
+ENC_sechellia_ortho.fasta<-ENC(sechellia_ortho.fasta_cu)
+ENC_sechellia_ortho.fasta <-as.data.frame(ENC_sechellia_ortho.fasta)
+ENC_sechellia_ortho.fasta <-rename(ENC_sechellia_ortho.fasta, Dsec = ENC_sechellia_ortho.fasta)
+
+serrata_ortho.fasta<- readSet(file="serrata_ortho.fasta")
+serrata_ortho.fasta_cu<-codonTable(serrata_ortho.fasta)
+serrata_ortho.fasta_cc<-codonCounts(serrata_ortho.fasta_cu) # 
+serrata_ortho.fasta_MILC<-MILC(serrata_ortho.fasta_cu) # 
+ENC_serrata_ortho.fasta<-ENC(serrata_ortho.fasta_cu)
+ENC_serrata_ortho.fasta <-as.data.frame(ENC_serrata_ortho.fasta)
+ENC_serrata_ortho.fasta <-rename(ENC_serrata_ortho.fasta, Dser = ENC_serrata_ortho.fasta)
+
+simulans_ortho.fasta<- readSet(file="simulans_ortho.fasta")
+simulans_ortho.fasta_cu<-codonTable(simulans_ortho.fasta)
+simulans_ortho.fasta_cc<-codonCounts(simulans_ortho.fasta_cu) # 
+simulans_ortho.fasta_MILC<-MILC(simulans_ortho.fasta_cu) # 
+ENC_simulans_ortho.fasta<-ENC(simulans_ortho.fasta_cu)
+ENC_simulans_ortho.fasta <-as.data.frame(ENC_simulans_ortho.fasta)
+ENC_simulans_ortho.fasta <-rename(ENC_simulans_ortho.fasta, Dsim = ENC_simulans_ortho.fasta)
+
+suzukii_ortho.fasta<- readSet(file="suzukii_ortho.fasta")
+suzukii_ortho.fasta_cu<-codonTable(suzukii_ortho.fasta)
+suzukii_ortho.fasta_cc<-codonCounts(suzukii_ortho.fasta_cu) # 
+suzukii_ortho.fasta_MILC<-MILC(suzukii_ortho.fasta_cu) # 
+ENC_suzukii_ortho.fasta<-ENC(suzukii_ortho.fasta_cu)
+ENC_suzukii_ortho.fasta <-as.data.frame(ENC_suzukii_ortho.fasta)
+ENC_suzukii_ortho.fasta <-rename(ENC_suzukii_ortho.fasta, Dsuz = ENC_suzukii_ortho.fasta)
+
+takahashii_ortho.fasta<- readSet(file="takahashii_ortho.fasta")
+takahashii_ortho.fasta_cu<-codonTable(takahashii_ortho.fasta)
+takahashii_ortho.fasta_cc<-codonCounts(takahashii_ortho.fasta_cu) # 
+takahashii_ortho.fasta_MILC<-MILC(takahashii_ortho.fasta_cu) # 
+ENC_takahashii_ortho.fasta<-ENC(takahashii_ortho.fasta_cu)
+ENC_takahashii_ortho.fasta <-as.data.frame(ENC_takahashii_ortho.fasta)
+ENC_takahashii_ortho.fasta <-rename(ENC_takahashii_ortho.fasta, Dtak = ENC_takahashii_ortho.fasta)
+
+virilis_ortho.fasta<- readSet(file="virilis_ortho.fasta")
+virilis_ortho.fasta_cu<-codonTable(virilis_ortho.fasta)
+virilis_ortho.fasta_cc<-codonCounts(virilis_ortho.fasta_cu) # 
+virilis_ortho.fasta_MILC<-MILC(virilis_ortho.fasta_cu) # 
+ENC_virilis_ortho.fasta<-ENC(virilis_ortho.fasta_cu)
+ENC_virilis_ortho.fasta <-as.data.frame(ENC_virilis_ortho.fasta)
+ENC_virilis_ortho.fasta <-rename(ENC_virilis_ortho.fasta, Dvir = ENC_virilis_ortho.fasta)
+
+willistoni_ortho.fasta<- readSet(file="willistoni_ortho.fasta")
+willistoni_ortho.fasta_cu<-codonTable(willistoni_ortho.fasta)
+willistoni_ortho.fasta_cc<-codonCounts(willistoni_ortho.fasta_cu) # 
+willistoni_ortho.fasta_MILC<-MILC(willistoni_ortho.fasta_cu) # 
+ENC_willistoni_ortho.fasta<-ENC(willistoni_ortho.fasta_cu)
+ENC_willistoni_ortho.fasta <-as.data.frame(ENC_willistoni_ortho.fasta)
+ENC_willistoni_ortho.fasta <-rename(ENC_willistoni_ortho.fasta, Dwil = ENC_willistoni_ortho.fasta)
+
+yakuba_ortho.fasta<- readSet(file="yakuba_ortho.fasta")
+yakuba_ortho.fasta_cu<-codonTable(yakuba_ortho.fasta)
+yakuba_ortho.fasta_cc<-codonCounts(yakuba_ortho.fasta_cu) # 
+yakuba_ortho.fasta_MILC<-MILC(yakuba_ortho.fasta_cu) # 
+ENC_yakuba_ortho.fasta<-ENC(yakuba_ortho.fasta_cu)
+ENC_yakuba_ortho.fasta <-as.data.frame(ENC_yakuba_ortho.fasta)
+ENC_yakuba_ortho.fasta <-rename(ENC_yakuba_ortho.fasta, Dyak = ENC_yakuba_ortho.fasta)
+
+
+# joining the 29 files, get average, minimum and maximum ENC values
+joining_ortho_ENC<- qpcR:::cbind.na(ENC_busckii_ortho.fasta,ENC_grimshawi_ortho.fasta,ENC_virilis_ortho.fasta,ENC_novamexicana_ortho.fasta, ENC_hydei_ortho.fasta,ENC_navojoa_ortho.fasta,ENC_mojavensis_ortho.fasta,ENC_arizonae_ortho.fasta, ENC_willistoni_ortho.fasta,ENC_kikkawai_ortho.fasta,ENC_serrata_ortho.fasta,ENC_ficusphila_ortho.fasta, ENC_eugracilis_ortho.fasta,ENC_melanogaster_ortho.fasta,ENC_simulans_ortho.fasta,ENC_sechellia_ortho.fasta, ENC_yakuba_ortho.fasta,ENC_erecta_ortho.fasta, ENC_takahashii_ortho.fasta, ENC_biarmipes_ortho.fasta, ENC_suzukii_ortho.fasta,ENC_elegans_ortho.fasta, ENC_rhopaloa_ortho.fasta, ENC_bipectinata_ortho.fasta,  ENC_ananassae_ortho.fasta, ENC_obscura_ortho.fasta,ENC_miranda_ortho.fasta,   ENC_persimilis_ortho.fasta, ENC_pseudoobscura_ortho.fasta)
+means_ortho_ENC <- data.frame(colMeans(joining_ortho_ENC,na.rm=TRUE))
+max_ortho_ENC <-data.frame(apply(joining_ortho_ENC,2,max))
+min_ortho_ENC <-data.frame(apply(joining_ortho_ENC,2,min))
+write.csv(min_ortho_ENC, "min_ortho_ENC.csv")
+write.csv(means_ortho_ENC, "means_ortho_ENC.csv")
+
+# get ENC for the coding sequences
+
+
+
+
+hydei_CDS<- readSet(file="D.hydei_CDS")
+hydei_CDS_cu<-codonTable(hydei_CDS)
+hydei_CDS_cc<-codonCounts(hydei_CDS_cu) # dont see a diff between cc and cu
+hydei_CDS_MILC<-MILC(hydei_CDS_cu) # cant see a possible use for this
+ENC_hydei_CDS<-ENC(hydei_CDS_cu)
+ENC_hydei_CDS <-as.data.frame(ENC_hydei_CDS)
+ENC_hydei_CDS <-rename(ENC_hydei_CDS, D.hydei = ENC_hydei_CDS)# here the second column name was self not X2
+
+novamexicana_CDS<- readSet(file="D.novamexicana_CDS")
+novamexicana_CDS_cu<-codonTable(novamexicana_CDS)
+novamexicana_CDS_cc<-codonCounts(novamexicana_CDS_cu) # dont see a diff between cc and cu
+novamexicana_CDS_MILC<-MILC(novamexicana_CDS_cu) # cant see a possible use for this
+ENC_novamexicana_CDS<-ENC(novamexicana_CDS_cu)
+ENC_novamexicana_CDS <-as.data.frame(ENC_novamexicana_CDS)
+ENC_novamexicana_CDS <-rename(ENC_novamexicana_CDS, D.novamexicana = ENC_novamexicana_CDS)
+
+pseudoobscura_CDS<- readSet(file="D.pseudoobscura_CDS")
+pseudoobscura_CDS_cu<-codonTable(pseudoobscura_CDS)
+pseudoobscura_CDS_cc<-codonCounts(pseudoobscura_CDS_cu) # dont see a diff between cc and cu
+pseudoobscura_CDS_MILC<-MILC(pseudoobscura_CDS_cu) # cant see a possible use for this
+ENC_pseudoobscura_CDS<-ENC(pseudoobscura_CDS_cu)
+ENC_pseudoobscura_CDS <-as.data.frame(ENC_pseudoobscura_CDS)
+ENC_pseudoobscura_CDS <-rename(ENC_pseudoobscura_CDS, D.pseudoobscura = ENC_pseudoobscura_CDS)
+
+miranda_CDS<- readSet(file="D.miranda_CDS")
+miranda_CDS_cu<-codonTable(miranda_CDS)
+miranda_CDS_cc<-codonCounts(miranda_CDS_cu) # dont see a diff between cc and cu
+miranda_CDS_MILC<-MILC(miranda_CDS_cu) # cant see a possible use for this
+ENC_miranda_CDS<-ENC(miranda_CDS_cu)
+ENC_miranda_CDS <-as.data.frame(ENC_miranda_CDS)
+ENC_miranda_CDS <-rename(ENC_miranda_CDS, D.miranda = ENC_miranda_CDS)
+
+biarmipes_CDS<- readSet(file="D.biarmipes_CDS")
+biarmipes_CDS_cu<-codonTable(biarmipes_CDS)
+biarmipes_CDS_cc<-codonCounts(biarmipes_CDS_cu) # dont see a diff between cc and cu
+biarmipes_CDS_MILC<-MILC(biarmipes_CDS_cu) # cant see a possible use for this
+ENC_biarmipes_CDS<-ENC(biarmipes_CDS_cu)
+ENC_biarmipes_CDS <-as.data.frame(ENC_biarmipes_CDS)
+ENC_biarmipes_CDS <-rename(ENC_biarmipes_CDS, D.biarmipes = ENC_biarmipes_CDS)
+
+takahashii_CDS<- readSet(file="D.takahashii_CDS")
+takahashii_CDS_cu<-codonTable(takahashii_CDS)
+takahashii_CDS_cc<-codonCounts(takahashii_CDS_cu) # dont see a diff between cc and cu
+takahashii_CDS_MILC<-MILC(takahashii_CDS_cu) # cant see a possible use for this
+ENC_takahashii_CDS<-ENC(takahashii_CDS_cu)
+ENC_takahashii_CDS <-as.data.frame(ENC_takahashii_CDS)
+ENC_takahashii_CDS <-rename(ENC_takahashii_CDS, D.takahashii = ENC_takahashii_CDS)
+
+persimilis_CDS<- readSet(file="D.persimilis_CDS")
+persimilis_CDS_cu<-codonTable(persimilis_CDS)
+persimilis_CDS_cc<-codonCounts(persimilis_CDS_cu) # dont see a diff between cc and cu
+persimilis_CDS_MILC<-MILC(persimilis_CDS_cu) # cant see a possible use for this
+ENC_persimilis_CDS<-ENC(persimilis_CDS_cu)
+ENC_persimilis_CDS <-as.data.frame(ENC_persimilis_CDS)
+ENC_persimilis_CDS <-rename(ENC_persimilis_CDS, D.persimilis = ENC_persimilis_CDS)
+
+
+erecta_CDS<- readSet(file="D.erecta_CDS")
+erecta_CDS_cu<-codonTable(erecta_CDS)
+erecta_CDS_cc<-codonCounts(erecta_CDS_cu) # dont see a diff between cc and cu
+erecta_CDS_MILC<-MILC(erecta_CDS_cu) # cant see a possible use for this
+ENC_erecta_CDS<-ENC(erecta_CDS_cu)
+ENC_erecta_CDS <-as.data.frame(ENC_erecta_CDS)
+ENC_erecta_CDS <-rename(ENC_erecta_CDS, D.erecta = ENC_erecta_CDS)
+
+ananassae_CDS<- readSet(file="D.ananassae_CDS")
+ananassae_CDS_cu<-codonTable(ananassae_CDS)
+ananassae_CDS_cc<-codonCounts(ananassae_CDS_cu) # dont see a diff between cc and cu
+ananassae_CDS_MILC<-MILC(ananassae_CDS_cu) # cant see a possible use for this
+ENC_ananassae_CDS<-ENC(ananassae_CDS_cu)
+ENC_ananassae_CDS <-as.data.frame(ENC_ananassae_CDS)
+ENC_ananassae_CDS <-rename(ENC_ananassae_CDS, D.ananassae = ENC_ananassae_CDS)
+
+melanogaster_CDS<- readSet(file="D.melanogaster_CDS")
+melanogaster_CDS_cu<-codonTable(melanogaster_CDS)
+melanogaster_CDS_cc<-codonCounts(melanogaster_CDS_cu) # dont see a diff between cc and cu
+melanogaster_CDS_MILC<-MILC(melanogaster_CDS_cu) # cant see a possible use for this
+ENC_melanogaster_CDS<-ENC(melanogaster_CDS_cu)
+ENC_melanogaster_CDS <-as.data.frame(ENC_melanogaster_CDS)
+ENC_melanogaster_CDS <-rename(ENC_melanogaster_CDS, D.melanogaster = ENC_melanogaster_CDS)
+
+suzukii_CDS<- readSet(file="D.suzukii_CDS")
+suzukii_CDS_cu<-codonTable(suzukii_CDS)
+suzukii_CDS_cc<-codonCounts(suzukii_CDS_cu) # dont see a diff between cc and cu
+suzukii_CDS_MILC<-MILC(suzukii_CDS_cu) # cant see a possible use for this
+ENC_suzukii_CDS<-ENC(suzukii_CDS_cu)
+ENC_suzukii_CDS <-as.data.frame(ENC_suzukii_CDS)
+ENC_suzukii_CDS <-rename(ENC_suzukii_CDS, D.suzukii = ENC_suzukii_CDS)
+
+serrata_CDS<- readSet(file="D.serrata_CDS")
+serrata_CDS_cu<-codonTable(serrata_CDS)
+serrata_CDS_cc<-codonCounts(serrata_CDS_cu) # dont see a diff between cc and cu
+serrata_CDS_MILC<-MILC(serrata_CDS_cu) # cant see a possible use for this
+ENC_serrata_CDS<-ENC(serrata_CDS_cu)
+ENC_serrata_CDS <-as.data.frame(ENC_serrata_CDS)
+ENC_serrata_CDS <-rename(ENC_serrata_CDS, D.serrata = ENC_serrata_CDS)
+
+
+bipectinata_CDS<- readSet(file="D.bipectinata_CDS")
+bipectinata_CDS_cu<-codonTable(bipectinata_CDS)
+bipectinata_CDS_cc<-codonCounts(bipectinata_CDS_cu) # dont see a diff between cc and cu
+bipectinata_CDS_MILC<-MILC(bipectinata_CDS_cu) # cant see a possible use for this
+ENC_bipectinata_CDS<-ENC(bipectinata_CDS_cu)
+ENC_bipectinata_CDS <-as.data.frame(ENC_bipectinata_CDS)
+ENC_bipectinata_CDS <-rename(ENC_bipectinata_CDS, D.bipectinata = ENC_bipectinata_CDS) # so the newer CDS that we got dont have the word self...the have the file name ENC_grmishawi_CDS)
+
+grimshawi_CDS<- readSet(file="D.grimshawi_CDS")
+grimshawi_CDS_cu<-codonTable(grimshawi_CDS)
+grimshawi_CDS_cc<-codonCounts(grimshawi_CDS_cu) # dont see a diff between cc and cu
+grimshawi_CDS_MILC<-MILC(grimshawi_CDS_cu) # cant see a possible use for this
+ENC_grimshawi_CDS<-ENC(grimshawi_CDS_cu)
+ENC_grimshawi_CDS <-as.data.frame(ENC_grimshawi_CDS)
+ENC_grimshawi_CDS <-rename(ENC_grimshawi_CDS, D.grimshawi = ENC_grimshawi_CDS)
+
+
+virilis_CDS<- readSet(file="D.virilis_CDS")
+virilis_CDS_cu<-codonTable(virilis_CDS)
+virilis_CDS_cc<-codonCounts(virilis_CDS_cu) # dont see a diff between cc and cu
+virilis_CDS_MILC<-MILC(virilis_CDS_cu) # cant see a possible use for this
+ENC_virilis_CDS<-ENC(virilis_CDS_cu)
+ENC_virilis_CDS <-as.data.frame(ENC_virilis_CDS)
+ENC_virilis_CDS <-rename(ENC_virilis_CDS, D.virilis = ENC_virilis_CDS)
+
+simulans_CDS<- readSet(file="D.simulans_CDS")
+simulans_CDS_cu<-codonTable(simulans_CDS)
+simulans_CDS_cc<-codonCounts(simulans_CDS_cu) # dont see a diff between cc and cu
+simulans_CDS_MILC<-MILC(simulans_CDS_cu) # cant see a possible use for this
+ENC_simulans_CDS<-ENC(simulans_CDS_cu)
+ENC_simulans_CDS <-as.data.frame(ENC_simulans_CDS)
+ENC_simulans_CDS <-rename(ENC_simulans_CDS, D.simulans = ENC_simulans_CDS)
+
+sechellia_CDS<- readSet(file="D.sechellia_CDS")
+sechellia_CDS_cu<-codonTable(sechellia_CDS)
+sechellia_CDS_cc<-codonCounts(sechellia_CDS_cu) # dont see a diff between cc and cu
+sechellia_CDS_MILC<-MILC(sechellia_CDS_cu) # cant see a possible use for this
+ENC_sechellia_CDS<-ENC(sechellia_CDS_cu)
+ENC_sechellia_CDS <-as.data.frame(ENC_sechellia_CDS)
+ENC_sechellia_CDS <-rename(ENC_sechellia_CDS, D.sechellia = ENC_sechellia_CDS)
+
+busckii_CDS<- readSet(file="D.busckii_CDS")
+busckii_CDS_cu<-codonTable(busckii_CDS)
+busckii_CDS_cc<-codonCounts(busckii_CDS_cu) # dont see a diff between cc and cu
+busckii_CDS_MILC<-MILC(busckii_CDS_cu) # cant see a possible use for this
+ENC_busckii_CDS<-ENC(busckii_CDS_cu)
+ENC_busckii_CDS <-as.data.frame(ENC_busckii_CDS)
+ENC_busckii_CDS <-rename(ENC_busckii_CDS, D.busckii = ENC_busckii_CDS)
+
+mojavensis_CDS<- readSet(file="D.mojavensis_CDS")
+mojavensis_CDS_cu<-codonTable(mojavensis_CDS)
+mojavensis_CDS_cc<-codonCounts(mojavensis_CDS_cu) # dont see a diff between cc and cu
+mojavensis_CDS_MILC<-MILC(mojavensis_CDS_cu) # cant see a possible use for this
+ENC_mojavensis_CDS<-ENC(mojavensis_CDS_cu)
+ENC_mojavensis_CDS <-as.data.frame(ENC_mojavensis_CDS)
+ENC_mojavensis_CDS <-rename(ENC_mojavensis_CDS, D.mojavensis = ENC_mojavensis_CDS)
+
+navojoa_CDS<- readSet(file="D.navojoa_CDS")
+navojoa_CDS_cu<-codonTable(navojoa_CDS)
+navojoa_CDS_cc<-codonCounts(navojoa_CDS_cu) # dont see a diff between cc and cu
+navojoa_CDS_MILC<-MILC(navojoa_CDS_cu) # cant see a possible use for this
+ENC_navojoa_CDS<-ENC(navojoa_CDS_cu)
+ENC_navojoa_CDS <-as.data.frame(ENC_navojoa_CDS)
+ENC_navojoa_CDS <-rename(ENC_navojoa_CDS, D.navojoa = ENC_navojoa_CDS)
+
+arizonae_CDS<- readSet(file="D.arizonae_CDS")
+arizonae_CDS_cu<-codonTable(arizonae_CDS)
+arizonae_CDS_cc<-codonCounts(arizonae_CDS_cu) # dont see a diff between cc and cu
+arizonae_CDS_MILC<-MILC(arizonae_CDS_cu) # cant see a possible use for this
+ENC_arizonae_CDS<-ENC(arizonae_CDS_cu)
+ENC_arizonae_CDS <-as.data.frame(ENC_arizonae_CDS)
+ENC_arizonae_CDS <-rename(ENC_arizonae_CDS, D.arizonae = ENC_arizonae_CDS)
+
+ficusphila_CDS<- readSet(file="D.ficusphila_CDS")
+ficusphila_CDS_cu<-codonTable(ficusphila_CDS)
+ficusphila_CDS_cc<-codonCounts(ficusphila_CDS_cu) # dont see a diff between cc and cu
+ficusphila_CDS_MILC<-MILC(ficusphila_CDS_cu) # cant see a possible use for this
+ENC_ficusphila_CDS<-ENC(ficusphila_CDS_cu)
+ENC_ficusphila_CDS <-as.data.frame(ENC_ficusphila_CDS)
+ENC_ficusphila_CDS <-rename(ENC_ficusphila_CDS, D.ficusphila = ENC_ficusphila_CDS)
+
+elegans_CDS<- readSet(file="D.elegans_CDS")
+elegans_CDS_cu<-codonTable(elegans_CDS)
+elegans_CDS_cc<-codonCounts(elegans_CDS_cu) # dont see a diff between cc and cu
+elegans_CDS_MILC<-MILC(elegans_CDS_cu) # cant see a possible use for this
+ENC_elegans_CDS<-ENC(elegans_CDS_cu)
+ENC_elegans_CDS <-as.data.frame(ENC_elegans_CDS)
+ENC_elegans_CDS <-rename(ENC_elegans_CDS, D.elegans = ENC_elegans_CDS)
+
+willistoni_CDS<- readSet(file="D.willistoni_CDS")
+willistoni_CDS_cu<-codonTable(willistoni_CDS)
+willistoni_CDS_cc<-codonCounts(willistoni_CDS_cu) # dont see a diff between cc and cu
+willistoni_CDS_MILC<-MILC(willistoni_CDS_cu) # cant see a possible use for this
+ENC_willistoni_CDS<-ENC(willistoni_CDS_cu)
+ENC_willistoni_CDS <-as.data.frame(ENC_willistoni_CDS)
+ENC_willistoni_CDS <-rename(ENC_willistoni_CDS, D.willistoni = ENC_willistoni_CDS)
+
+yakuba_CDS<- readSet(file="D.yakuba_CDS")
+yakuba_CDS_cu<-codonTable(yakuba_CDS)
+yakuba_CDS_cc<-codonCounts(yakuba_CDS_cu) # dont see a diff between cc and cu
+yakuba_CDS_MILC<-MILC(yakuba_CDS_cu) # cant see a possible use for this
+ENC_yakuba_CDS<-ENC(yakuba_CDS_cu)
+ENC_yakuba_CDS <-as.data.frame(ENC_yakuba_CDS)
+ENC_yakuba_CDS <-rename(ENC_yakuba_CDS, D.yakuba = ENC_yakuba_CDS)
+
+
+kikkawai_CDS<- readSet(file="D.kikkawai_CDS")
+kikkawai_CDS_cu<-codonTable(kikkawai_CDS)
+kikkawai_CDS_cc<-codonCounts(kikkawai_CDS_cu) # dont see a diff between cc and cu
+kikkawai_CDS_MILC<-MILC(kikkawai_CDS_cu) # cant see a possible use for this
+ENC_kikkawai_CDS<-ENC(kikkawai_CDS_cu)
+ENC_kikkawai_CDS <-as.data.frame(ENC_kikkawai_CDS)
+ENC_kikkawai_CDS <-rename(ENC_kikkawai_CDS, D.kikkawai = ENC_kikkawai_CDS)
+
+
+obscura_CDS<- readSet(file="D.obscura_CDS")
+obscura_CDS_cu<-codonTable(obscura_CDS)
+obscura_CDS_cc<-codonCounts(obscura_CDS_cu) # dont see a diff between cc and cu
+obscura_CDS_MILC<-MILC(obscura_CDS_cu) # cant see a possible use for this
+ENC_obscura_CDS<-ENC(obscura_CDS_cu)
+ENC_obscura_CDS <-as.data.frame(ENC_obscura_CDS)
+ENC_obscura_CDS <-rename(ENC_obscura_CDS, D.obscura = ENC_obscura_CDS)
+
+eugracilis_CDS<- readSet(file="D.eugracilis_CDS")
+eugracilis_CDS_cu<-codonTable(eugracilis_CDS)
+eugracilis_CDS_cc<-codonCounts(eugracilis_CDS_cu) # dont see a diff between cc and cu
+eugracilis_CDS_MILC<-MILC(eugracilis_CDS_cu) # cant see a possible use for this
+ENC_eugracilis_CDS<-ENC(eugracilis_CDS_cu)
+ENC_eugracilis_CDS <-as.data.frame(ENC_eugracilis_CDS)
+ENC_eugracilis_CDS <-rename(ENC_eugracilis_CDS, D.eugracilis = ENC_eugracilis_CDS)
+
+
+rhopaloa_CDS<- readSet(file="D.rhopaloa_CDS")
+rhopaloa_CDS_cu<-codonTable(rhopaloa_CDS)
+rhopaloa_CDS_cc<-codonCounts(rhopaloa_CDS_cu) # dont see a diff between cc and cu
+rhopaloa_CDS_MILC<-MILC(rhopaloa_CDS_cu) # cant see a possible use for this
+ENC_rhopaloa_CDS<-ENC(rhopaloa_CDS_cu)
+ENC_rhopaloa_CDS <-as.data.frame(ENC_rhopaloa_CDS)
+ENC_rhopaloa_CDS <-rename(ENC_rhopaloa_CDS, D.rhopaloa = ENC_rhopaloa_CDS)
+
+
+write.csv(ENC_ananassae_CDS, file="D.ananassae_CDS_ENC.csv")
+write.csv(ENC_arizonae_CDS, file="D.arizonae_CDS_ENC.csv")
+write.csv(ENC_biarmipes_CDS, file="D.biarmipes_CDS_ENC.csv")
+write.csv(ENC_bipectinata_CDS, file="D.bipectinata_CDS_ENC.csv")
+write.csv(ENC_busckii_CDS, file="D.busckii_CDS_ENC.csv")
+write.csv(ENC_elegans_CDS, file="D.elegans_CDS_ENC.csv")
+write.csv(ENC_erecta_CDS, file="D.erecta_CDS_ENC.csv")
+write.csv(ENC_eugracilis_CDS, file="D.eugracilis_CDS_ENC.csv")
+write.csv(ENC_ficusphila_CDS, file="D.ficusphila_CDS_ENC.csv")
+write.csv(ENC_grimshawi_CDS, file="D.grimshawi_CDS_ENC.csv")
+write.csv(ENC_hydei_CDS, file="D.hydei_CDS_ENC.csv")
+write.csv(ENC_kikkawai_CDS, file="D.kikkawai_CDS_ENC.csv")
+write.csv(ENC_melanogaster_CDS, file="D.melanogaster_CDS_ENC.csv")
+write.csv(ENC_miranda_CDS, file="D.miranda_CDS_ENC.csv")
+write.csv(ENC_mojavensis_CDS, file="D.mojavensis_CDS_ENC.csv")
+write.csv(ENC_navojoa_CDS, file="D.navojoa_CDS_ENC.csv")
+write.csv(ENC_novamexicana_CDS, file="D.novamexicana_CDS_ENC.csv")
+write.csv(ENC_obscura_CDS, file="D.obscura_CDS_ENC.csv")
+write.csv(ENC_persimilis_CDS, file="D.persimilis_CDS_ENC.csv")
+write.csv(ENC_pseudoobscura_CDS, file="D.pseudoobscura_CDS_ENC.csv")
+write.csv(ENC_rhopaloa_CDS, file="D.rhopaloa_CDS_ENC.csv")
+write.csv(ENC_serrata_CDS, file="D.serrata_CDS_ENC.csv")
+write.csv(ENC_sechellia_CDS, file="D.sechellia_CDS_ENC.csv")
+write.csv(ENC_simulans_CDS, file="D.simulans_CDS_ENC.csv")
+write.csv(ENC_suzukii_CDS, file="D.suzukii_CDS_ENC.csv")
+write.csv(ENC_takahashii_CDS, file="D.takahashii_CDS_ENC.csv")
+write.csv(ENC_virilis_CDS, file="D.virilis_CDS_ENC.csv")
+write.csv(ENC_willistoni_CDS, file="D.willistoni_CDS_ENC.csv")
+write.csv(ENC_yakuba_CDS, file="D.yakuba_CDS_ENC.csv")
+
+# as the total number of genes is different in each file..i couldnt merge it. I have taken the mean, minimum and maximum individually.
+
+#getting the RSCU data
+ana_ortho_R<-read.fasta(file="ananassae_ortho.fasta")
+ari_ortho_R<-read.fasta(file="arizonae_ortho.fasta")
+bia_ortho_R<-read.fasta(file="biarmipes_ortho.fasta")
+bip_ortho_R<-read.fasta(file="bipectinata_ortho.fasta")
+bus_ortho_R<-read.fasta(file="busckii_ortho.fasta")
+ele_ortho_R<-read.fasta(file="elegans_ortho.fasta")
+ere_ortho_R<-read.fasta(file="erecta_ortho.fasta")
+eug_ortho_R<-read.fasta(file="eugracilis_ortho.fasta")
+fic_ortho_R<-read.fasta(file="ficusphila_ortho.fasta")
+gri_ortho_R<-read.fasta(file="grimshawi_ortho.fasta")
+hyd_ortho_R<-read.fasta(file="hydei_ortho.fasta")
+kik_ortho_R<-read.fasta(file="kikkawai_ortho.fasta")
+mel_ortho_R<-read.fasta(file="melanogaster_ortho.fasta")
+mir_ortho_R<-read.fasta(file="miranda_ortho.fasta")
+moj_ortho_R<-read.fasta(file="mojavensis_ortho.fasta")
+nav_ortho_R<-read.fasta(file="navojoa_ortho.fasta")
+nov_ortho_R<-read.fasta(file="novamexicana_ortho.fasta")
+obs_ortho_R<-read.fasta(file="obscura_ortho.fasta")
+per_ortho_R<-read.fasta(file="persimilis_ortho.fasta")
+pse_ortho_R<-read.fasta(file="pseudoobscura_ortho.fasta")
+rho_ortho_R<-read.fasta(file="rhopaloa_ortho.fasta")
+sec_ortho_R<-read.fasta(file="sechellia_ortho.fasta")
+ser_ortho_R<-read.fasta(file="serrata_ortho.fasta")
+sim_ortho_R<-read.fasta(file="simulans_ortho.fasta")
+suz_ortho_R<-read.fasta(file="suzukii_ortho.fasta")
+tak_ortho_R<-read.fasta(file="takahashii_ortho.fasta")
+vir_ortho_R<-read.fasta(file="virilis_ortho.fasta")
+wil_ortho_R<-read.fasta(file="willistoni_ortho.fasta")
+yak_ortho_R<-read.fasta(file="yakuba_ortho.fasta")
+
+# these commands send your individual species RSCU,eff and frequency results into a csv file.
+ana_ortho_R.rscu<-lapply(ana_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(ana_ortho_R.rscu, "ana_ortho_R.rscu.csv")
+ana_ortho_R_rscu<-read_csv("ana_ortho_R.rscu.csv")
+ari_ortho_R.rscu<-lapply(ari_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(ari_ortho_R.rscu, "ari_ortho_R.rscu.csv")
+ari_ortho_R_rscu<-read_csv("ari_ortho_R.rscu.csv")
+bia_ortho_R.rscu<-lapply(bia_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(bia_ortho_R.rscu, "bia_ortho_R.rscu.csv")
+bia_ortho_R_rscu<-read_csv("bia_ortho_R.rscu.csv")
+bip_ortho_R.rscu<-lapply(bip_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(bip_ortho_R.rscu, "bip_ortho_R.rscu.csv")
+bip_ortho_R_rscu<-read_csv("bip_ortho_R.rscu.csv")
+bus_ortho_R.rscu<-lapply(bus_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(bus_ortho_R.rscu, "bus_ortho_R.rscu.csv")
+bus_ortho_R_rscu<-read_csv("bus_ortho_R.rscu.csv")
+ele_ortho_R.rscu<-lapply(ele_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(ele_ortho_R.rscu, "ele_ortho_R.rscu.csv")
+ele_ortho_R_rscu<-read_csv("ele_ortho_R.rscu.csv")
+ere_ortho_R.rscu<-lapply(ere_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(ere_ortho_R.rscu, "ere_ortho_R.rscu.csv")
+ere_ortho_R_rscu<-read_csv("ere_ortho_R.rscu.csv")
+eug_ortho_R.rscu<-lapply(eug_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(eug_ortho_R.rscu, "eug_ortho_R.rscu.csv")
+eug_ortho_R_rscu<-read_csv("eug_ortho_R.rscu.csv")
+fic_ortho_R.rscu<-lapply(fic_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(fic_ortho_R.rscu, "fic_ortho_R.rscu.csv")
+fic_ortho_R_rscu<-read_csv("fic_ortho_R.rscu.csv")
+gri_ortho_R.rscu<-lapply(gri_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(gri_ortho_R.rscu, "gri_ortho_R.rscu.csv")
+gri_ortho_R_rscu<-read_csv("gri_ortho_R.rscu.csv")
+hyd_ortho_R.rscu<-lapply(hyd_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(hyd_ortho_R.rscu, "hyd_ortho_R.rscu.csv")
+hyd_ortho_R_rscu<-read_csv("hyd_ortho_R.rscu.csv")
+kik_ortho_R.rscu<-lapply(kik_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(kik_ortho_R.rscu, "kik_ortho_R.rscu.csv")
+kik_ortho_R_rscu<-read_csv("kik_ortho_R.rscu.csv")
+mel_ortho_R.rscu<-lapply(mel_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(mel_ortho_R.rscu, "mel_ortho_R.rscu.csv")
+mel_ortho_R_rscu<-read_csv("mel_ortho_R.rscu.csv")
+mir_ortho_R.rscu<-lapply(mir_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(mir_ortho_R.rscu, "mir_ortho_R.rscu.csv")
+mir_ortho_R_rscu<-read_csv("mir_ortho_R.rscu.csv")
+moj_ortho_R.rscu<-lapply(moj_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(moj_ortho_R.rscu, "moj_ortho_R.rscu.csv")
+moj_ortho_R_rscu<-read_csv("moj_ortho_R.rscu.csv")
+nav_ortho_R.rscu<-lapply(nav_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(nav_ortho_R.rscu, "nav_ortho_R.rscu.csv")
+nav_ortho_R_rscu<-read_csv("nav_ortho_R.rscu.csv")
+nov_ortho_R.rscu<-lapply(nov_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(nov_ortho_R.rscu, "nov_ortho_R.rscu.csv")
+nov_ortho_R_rscu<-read_csv("nov_ortho_R.rscu.csv")
+obs_ortho_R.rscu<-lapply(obs_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(obs_ortho_R.rscu, "obs_ortho_R.rscu.csv")
+obs_ortho_R_rscu<-read_csv("obs_ortho_R.rscu.csv")
+per_ortho_R.rscu<-lapply(per_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(per_ortho_R.rscu, "per_ortho_R.rscu.csv")
+per_ortho_R_rscu<-read_csv("per_ortho_R.rscu.csv")
+pse_ortho_R.rscu<-lapply(pse_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(pse_ortho_R.rscu, "pse_ortho_R.rscu.csv")
+pse_ortho_R_rscu<-read_csv("pse_ortho_R.rscu.csv")
+rho_ortho_R.rscu<-lapply(rho_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(rho_ortho_R.rscu, "rho_ortho_R.rscu.csv")
+rho_ortho_R_rscu<-read_csv("rho_ortho_R.rscu.csv")
+sec_ortho_R.rscu<-lapply(sec_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(sec_ortho_R.rscu, "sec_ortho_R.rscu.csv")
+sec_ortho_R_rscu<-read_csv("sec_ortho_R.rscu.csv")
+ser_ortho_R.rscu<-lapply(ser_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(ser_ortho_R.rscu, "ser_ortho_R.rscu.csv")
+ser_ortho_R_rscu<-read_csv("ser_ortho_R.rscu.csv")
+sim_ortho_R.rscu<-lapply(sim_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(sim_ortho_R.rscu, "sim_ortho_R.rscu.csv")
+sim_ortho_R_rscu<-read_csv("sim_ortho_R.rscu.csv")
+suz_ortho_R.rscu<-lapply(suz_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(suz_ortho_R.rscu, "suz_ortho_R.rscu.csv")
+suz_ortho_R_rscu<-read_csv("suz_ortho_R.rscu.csv")
+tak_ortho_R.rscu<-lapply(tak_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(tak_ortho_R.rscu, "tak_ortho_R.rscu.csv")
+tak_ortho_R_rscu<-read_csv("tak_ortho_R.rscu.csv")
+vir_ortho_R.rscu<-lapply(vir_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(vir_ortho_R.rscu, "vir_ortho_R.rscu.csv")
+vir_ortho_R_rscu<-read_csv("vir_ortho_R.rscu.csv")
+wil_ortho_R.rscu<-lapply(wil_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(wil_ortho_R.rscu, "wil_ortho_R.rscu.csv")
+wil_ortho_R_rscu<-read_csv("wil_ortho_R.rscu.csv")
+yak_ortho_R.rscu<-lapply(yak_ortho_R,uco,index="rscu", as.data.frame = TRUE)
+write.csv(yak_ortho_R.rscu, "yak_ortho_R.rscu.csv")
+yak_ortho_R_rscu<-read_csv("yak_ortho_R.rscu.csv")
+
+
+#each rscu file was cleaned to remove unwanted columns. The table was transformed to get genes as row names and amino acids as columns
+#The average RSCU for each codon for each amino acid was calculated. THis is a mathematical way of doing what Lamolle et al 2018, have done by making a long concatenated superpeptide.
+#The minimum, maximum and average RSCU values for each codon for each amino acid per species are tabulated in Supplementary Table 2.
+#The RSCU values are arranged with the species in the correct phylogenetic order.  
+
+
+# go to ortho_sequences for these ones...u can copy the code above to get a heatmap...but no fun in that
+orthologues_average_RSCU<- read_csv(file="RSCU_allspecies_improvedphylo.csv")
+
+
+#working with each amino acid
+ala_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ala')
+ala_RSCU_melt<-melt(ala_RSCU)
+ggplot(ala_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + 
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+arg_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Arg')
+arg_RSCU_melt<-melt(arg_RSCU)
+ggplot(arg_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Arginine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+asn_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Asn')
+asn_RSCU_melt<-melt(asn_RSCU)
+ggplot(asn_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Asparagine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+asp_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Asp')
+asp_RSCU_melt<-melt(asp_RSCU)
+ggplot(asp_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Aspartic Acid")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+cys_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Cys')
+cys_RSCU_melt<-melt(cys_RSCU)
+ggplot(cys_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Cysteine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+gln_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Gln')
+gln_RSCU_melt<-melt(gln_RSCU)
+ggplot(gln_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Glutamine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+glu_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Glu')
+glu_RSCU_melt<-melt(glu_RSCU)
+ggplot(glu_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Glutamic Acid")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+gly_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Gly')
+gly_RSCU_melt<-melt(gly_RSCU)
+ggplot(gly_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Glycine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+his_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='His')
+his_RSCU_melt<-melt(his_RSCU)
+ggplot(his_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Histidine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+ile_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ile')
+ile_RSCU_melt<-melt(ile_RSCU)
+ggplot(ile_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Isoleucine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+leu_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Leu')
+leu_RSCU_melt<-melt(leu_RSCU)
+ggplot(leu_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Leucine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+lys_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Lys')
+lys_RSCU_melt<-melt(lys_RSCU)
+ggplot(lys_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Lysine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+phe_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Phe')
+phe_RSCU_melt<-melt(phe_RSCU)
+ggplot(phe_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Phenylalanine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+pro_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Pro')
+pro_RSCU_melt<-melt(pro_RSCU)
+ggplot(pro_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Proline")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+ser_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ser')
+ser_RSCU_melt<-melt(ser_RSCU)
+ggplot(ser_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Serine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+thr_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Thr')
+thr_RSCU_melt<-melt(thr_RSCU)
+ggplot(thr_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Threonine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+tyr_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Tyr')
+tyr_RSCU_melt<-melt(tyr_RSCU)
+ggplot(tyr_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Tyrosine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+val_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Val')
+val_RSCU_melt<-melt(val_RSCU)
+ggplot(val_RSCU_melt, aes(x=variable, y=value, color=codon)) +
+  geom_point(shape=20, size=10) + ggtitle("Valine")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+#SENC_X calculation
+#the same RSCU files for each speices withthe orthologous genes was now cleaned to remove the rscu values but keep the eff values that are required for calculating SENC_X
+these files are saved indiviudially for each species e.g. ana_ortho_R_eff.csv
+
+#ananassae
+ana_eff<-read_csv("ana_ortho_R_eff.csv")
+ana_ala<-subset(ana_eff,Amino_acid=="Ala")
+summed_ana_ala<-ana_ala %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_ala<-ana_ala %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_ala<- gettingPi_ana_ala %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_ala<- squaringPi_ana_ala %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_ala<-rbind(summed_ana_ala,sumsofsquares_ana_ala)
+multiplybyn_ana_ala<-merged_ana_ala[5,3:670]*merged_ana_ala[10,3:670]
+Pisquareinto_n_minus_1_ana_ala<-multiplybyn_ana_ala - 1
+n_1_ana_ala<- merged_ana_ala[5,3:670]-1
+FAA_ana_ala<-Pisquareinto_n_minus_1_ana_ala/n_1_ana_ala
+ENC_AA_ana_ala<-1/FAA_ana_ala 
+write.csv(ENC_AA_ana_ala, "ENCX_ana_ala.csv") # do this..then go to excel..you remove the gene names column..get the numbers as a comma separated file in notepad
+
+ana_gly<-subset(ana_eff,Amino_acid=="Gly")
+summed_ana_gly<-ana_gly %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_gly<-ana_gly %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_gly<- gettingPi_ana_gly %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_gly<- squaringPi_ana_gly %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_gly<-rbind(summed_ana_gly,sumsofsquares_ana_gly)
+multiplybyn_ana_gly<-merged_ana_gly[5,3:670]*merged_ana_gly[10,3:670]
+Pisquareinto_n_minus_1_ana_gly<-multiplybyn_ana_gly - 1
+n_1_ana_gly<- merged_ana_gly[5,3:670]-1
+FAA_ana_gly<-Pisquareinto_n_minus_1_ana_gly/n_1_ana_gly
+ENC_AA_ana_gly<-1/FAA_ana_gly 
+write.csv(ENC_AA_ana_gly, "ENCX_ana_gly.csv")
+
+ana_pro<-subset(ana_eff,Amino_acid=="Pro")
+summed_ana_pro<-ana_pro %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_pro<-ana_pro %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_pro<- gettingPi_ana_pro %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_pro<- squaringPi_ana_pro %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_pro<-rbind(summed_ana_pro,sumsofsquares_ana_pro)
+multiplybyn_ana_pro<-merged_ana_pro[5,3:670]*merged_ana_pro[10,3:670]
+Pisquareinto_n_minus_1_ana_pro<-multiplybyn_ana_pro - 1
+n_1_ana_pro<- merged_ana_pro[5,3:670]-1
+FAA_ana_pro<-Pisquareinto_n_minus_1_ana_pro/n_1_ana_pro
+ENC_AA_ana_pro<-1/FAA_ana_pro 
+write.csv(ENC_AA_ana_pro, "ENCX_ana_pro.csv")
+
+ana_val<-subset(ana_eff,Amino_acid=="Val")
+summed_ana_val<-ana_val %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_val<-ana_val %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_val<- gettingPi_ana_val %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_val<- squaringPi_ana_val %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_val<-rbind(summed_ana_val,sumsofsquares_ana_val)
+multiplybyn_ana_val<-merged_ana_val[5,3:670]*merged_ana_val[10,3:670]
+Pisquareinto_n_minus_1_ana_val<-multiplybyn_ana_val - 1
+n_1_ana_val<- merged_ana_val[5,3:670]-1
+FAA_ana_val<-Pisquareinto_n_minus_1_ana_val/n_1_ana_val
+ENC_AA_ana_val<-1/FAA_ana_val 
+write.csv(ENC_AA_ana_val, "ENCX_ana_val.csv")
+
+ana_thr<-subset(ana_eff,Amino_acid=="Thr")
+summed_ana_thr<-ana_thr %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_thr<-ana_thr %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_thr<- gettingPi_ana_thr %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_thr<- squaringPi_ana_thr %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_thr<-rbind(summed_ana_thr,sumsofsquares_ana_thr)
+multiplybyn_ana_thr<-merged_ana_thr[5,3:670]*merged_ana_thr[10,3:670]
+Pisquareinto_n_minus_1_ana_thr<-multiplybyn_ana_thr - 1
+n_1_ana_thr<- merged_ana_thr[5,3:670]-1
+FAA_ana_thr<-Pisquareinto_n_minus_1_ana_thr/n_1_ana_thr
+ENC_AA_ana_thr<-1/FAA_ana_thr 
+write.csv(ENC_AA_ana_thr, "ENCX_ana_thr.csv")
+
+
+ana_asn<-subset(ana_eff,Amino_acid=="Asn")
+summed_ana_asn<-ana_asn %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_asn<-ana_asn %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_asn<- gettingPi_ana_asn %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_asn<- squaringPi_ana_asn %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_asn<-rbind(summed_ana_asn,sumsofsquares_ana_asn)
+multiplybyn_ana_asn<-merged_ana_asn[3,3:670]*merged_ana_asn[6,3:670]
+Pisquareinto_n_minus_1_ana_asn<-multiplybyn_ana_asn - 1
+n_1_ana_asn<- merged_ana_asn[3,3:670]-1
+FAA_ana_asn<-Pisquareinto_n_minus_1_ana_asn/n_1_ana_asn
+ENC_AA_ana_asn<-1/FAA_ana_asn 
+write.csv(ENC_AA_ana_asn, "ENCX_ana_asn.csv")
+
+
+ana_asp<-subset(ana_eff,Amino_acid=="Asp")
+summed_ana_asp<-ana_asp %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_asp<-ana_asp %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_asp<- gettingPi_ana_asp %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_asp<- squaringPi_ana_asp %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_asp<-rbind(summed_ana_asp,sumsofsquares_ana_asp)
+multiplybyn_ana_asp<-merged_ana_asp[3,3:670]*merged_ana_asp[6,3:670]
+Pisquareinto_n_minus_1_ana_asp<-multiplybyn_ana_asp - 1
+n_1_ana_asp<- merged_ana_asp[3,3:670]-1
+FAA_ana_asp<-Pisquareinto_n_minus_1_ana_asp/n_1_ana_asp
+ENC_AA_ana_asp<-1/FAA_ana_asp 
+write.csv(ENC_AA_ana_asp, "ENCX_ana_asp.csv")
+
+ana_cys<-subset(ana_eff,Amino_acid=="Cys")
+summed_ana_cys<-ana_cys %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_cys<-ana_cys %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_cys<- gettingPi_ana_cys %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_cys<- squaringPi_ana_cys %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_cys<-rbind(summed_ana_cys,sumsofsquares_ana_cys)
+multiplybyn_ana_cys<-merged_ana_cys[3,3:670]*merged_ana_cys[6,3:670]
+Pisquareinto_n_minus_1_ana_cys<-multiplybyn_ana_cys - 1
+n_1_ana_cys<- merged_ana_cys[3,3:670]-1
+FAA_ana_cys<-Pisquareinto_n_minus_1_ana_cys/n_1_ana_cys
+ENC_AA_ana_cys<-1/FAA_ana_cys 
+write.csv(ENC_AA_ana_cys, "ENCX_ana_cys.csv")
+
+ana_gln<-subset(ana_eff,Amino_acid=="Gln")
+summed_ana_gln<-ana_gln %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_gln<-ana_gln %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_gln<- gettingPi_ana_gln %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_gln<- squaringPi_ana_gln %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_gln<-rbind(summed_ana_gln,sumsofsquares_ana_gln)
+multiplybyn_ana_gln<-merged_ana_gln[3,3:670]*merged_ana_gln[6,3:670]
+Pisquareinto_n_minus_1_ana_gln<-multiplybyn_ana_gln - 1
+n_1_ana_gln<- merged_ana_gln[3,3:670]-1
+FAA_ana_gln<-Pisquareinto_n_minus_1_ana_gln/n_1_ana_gln
+ENC_AA_ana_gln<-1/FAA_ana_gln 
+write.csv(ENC_AA_ana_gln, "ENCX_ana_gln.csv")
+
+ana_glu<-subset(ana_eff,Amino_acid=="Glu")
+summed_ana_glu<-ana_glu %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_glu<-ana_glu %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_glu<- gettingPi_ana_glu %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_glu<- squaringPi_ana_glu %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_glu<-rbind(summed_ana_glu,sumsofsquares_ana_glu)
+multiplybyn_ana_glu<-merged_ana_glu[3,3:670]*merged_ana_glu[6,3:670]
+Pisquareinto_n_minus_1_ana_glu<-multiplybyn_ana_glu - 1
+n_1_ana_glu<- merged_ana_glu[3,3:670]-1
+FAA_ana_glu<-Pisquareinto_n_minus_1_ana_glu/n_1_ana_glu
+ENC_AA_ana_glu<-1/FAA_ana_glu 
+write.csv(ENC_AA_ana_glu, "ENCX_ana_glu.csv")
+
+ana_his<-subset(ana_eff,Amino_acid=="His")
+summed_ana_his<-ana_his %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_his<-ana_his %>%
+  mutate_if(is.numeric, funs(./sum(.))) # this is better...we dont even need to do the sum..this gives a matrix with the pi's where the ni's were
+squaringPi_ana_his<- gettingPi_ana_his %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_his<- squaringPi_ana_his %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_his<-rbind(summed_ana_his,sumsofsquares_ana_his)
+multiplybyn_ana_his<-merged_ana_his[3,3:670]*merged_ana_his[6,3:670]
+Pisquareinto_n_minus_1_ana_his<-multiplybyn_ana_his - 1
+n_1_ana_his<- merged_ana_his[3,3:670]-1
+FAA_ana_his<-Pisquareinto_n_minus_1_ana_his/n_1_ana_his
+ENC_AA_ana_his<-1/FAA_ana_his 
+write.csv(ENC_AA_ana_his, "ENCX_ana_his.csv")
+
+ana_lys<-subset(ana_eff,Amino_acid=="Lys")
+summed_ana_lys<-ana_lys %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_lys<-ana_lys %>%
+  mutate_if(is.numeric, funs(./sum(.))) # tlys is better...we dont even need to do the sum..tlys gives a matrix with the pi's where the ni's were
+squaringPi_ana_lys<- gettingPi_ana_lys %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_lys<- squaringPi_ana_lys %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_lys<-rbind(summed_ana_lys,sumsofsquares_ana_lys)
+multiplybyn_ana_lys<-merged_ana_lys[3,3:670]*merged_ana_lys[6,3:670]
+Pisquareinto_n_minus_1_ana_lys<-multiplybyn_ana_lys - 1
+n_1_ana_lys<- merged_ana_lys[3,3:670]-1
+FAA_ana_lys<-Pisquareinto_n_minus_1_ana_lys/n_1_ana_lys
+ENC_AA_ana_lys<-1/FAA_ana_lys 
+write.csv(ENC_AA_ana_lys, "ENCX_ana_lys.csv")
+
+ana_phe<-subset(ana_eff,Amino_acid=="Phe")
+summed_ana_phe<-ana_phe %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_phe<-ana_phe %>%
+  mutate_if(is.numeric, funs(./sum(.))) # tphe is better...we dont even need to do the sum..tphe gives a matrix with the pi's where the ni's were
+squaringPi_ana_phe<- gettingPi_ana_phe %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_phe<- squaringPi_ana_phe %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_phe<-rbind(summed_ana_phe,sumsofsquares_ana_phe)
+multiplybyn_ana_phe<-merged_ana_phe[3,3:670]*merged_ana_phe[6,3:670]
+Pisquareinto_n_minus_1_ana_phe<-multiplybyn_ana_phe - 1
+n_1_ana_phe<- merged_ana_phe[3,3:670]-1
+FAA_ana_phe<-Pisquareinto_n_minus_1_ana_phe/n_1_ana_phe
+ENC_AA_ana_phe<-1/FAA_ana_phe 
+write.csv(ENC_AA_ana_phe, "ENCX_ana_phe.csv")
+
+
+ana_tyr<-subset(ana_eff,Amino_acid=="Tyr")
+summed_ana_tyr<-ana_tyr %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_tyr<-ana_tyr %>%
+  mutate_if(is.numeric, funs(./sum(.))) # ttyr is better...we dont even need to do the sum..ttyr gives a matrix with the pi's where the ni's were
+squaringPi_ana_tyr<- gettingPi_ana_tyr %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_tyr<- squaringPi_ana_tyr %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_tyr<-rbind(summed_ana_tyr,sumsofsquares_ana_tyr)
+multiplybyn_ana_tyr<-merged_ana_tyr[3,3:670]*merged_ana_tyr[6,3:670]
+Pisquareinto_n_minus_1_ana_tyr<-multiplybyn_ana_tyr - 1
+n_1_ana_tyr<- merged_ana_tyr[3,3:670]-1
+FAA_ana_tyr<-Pisquareinto_n_minus_1_ana_tyr/n_1_ana_tyr
+ENC_AA_ana_tyr<-1/FAA_ana_tyr 
+write.csv(ENC_AA_ana_tyr, "ENCX_ana_tyr.csv")
+
+ana_arg<-subset(ana_eff,Amino_acid=="Arg")
+summed_ana_arg<-ana_arg %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_arg<-ana_arg %>%
+  mutate_if(is.numeric, funs(./sum(.))) # targ is better...we dont even need to do the sum..targ gives a matrix with the pi's where the ni's were
+squaringPi_ana_arg<- gettingPi_ana_arg %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_arg<- squaringPi_ana_arg %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_arg<-rbind(summed_ana_arg,sumsofsquares_ana_arg)
+multiplybyn_ana_arg<-merged_ana_arg[7,3:670]*merged_ana_arg[14,3:670]
+Pisquareinto_n_minus_1_ana_arg<-multiplybyn_ana_arg - 1
+n_1_ana_arg<- merged_ana_arg[7,3:670]-1
+FAA_ana_arg<-Pisquareinto_n_minus_1_ana_arg/n_1_ana_arg
+ENC_AA_ana_arg<-1/FAA_ana_arg 
+write.csv(ENC_AA_ana_arg, "ENCX_ana_arg.csv")
+
+ana_leu<-subset(ana_eff,Amino_acid=="Leu")
+summed_ana_leu<-ana_leu %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_leu<-ana_leu %>%
+  mutate_if(is.numeric, funs(./sum(.))) # tleu is better...we dont even need to do the sum..tleu gives a matrix with the pi's where the ni's were
+squaringPi_ana_leu<- gettingPi_ana_leu %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_leu<- squaringPi_ana_leu %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_leu<-rbind(summed_ana_leu,sumsofsquares_ana_leu)
+multiplybyn_ana_leu<-merged_ana_leu[7,3:670]*merged_ana_leu[14,3:670]
+Pisquareinto_n_minus_1_ana_leu<-multiplybyn_ana_leu - 1
+n_1_ana_leu<- merged_ana_leu[7,3:670]-1
+FAA_ana_leu<-Pisquareinto_n_minus_1_ana_leu/n_1_ana_leu
+ENC_AA_ana_leu<-1/FAA_ana_leu 
+write.csv(ENC_AA_ana_leu, "ENCX_ana_leu.csv")
+
+ana_ser<-subset(ana_eff,Amino_acid=="Ser")
+summed_ana_ser<-ana_ser %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_ser<-ana_ser %>%
+  mutate_if(is.numeric, funs(./sum(.))) # tser is better...we dont even need to do the sum..tser gives a matrix with the pi's where the ni's were
+squaringPi_ana_ser<- gettingPi_ana_ser %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_ser<- squaringPi_ana_ser %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_ser<-rbind(summed_ana_ser,sumsofsquares_ana_ser)
+multiplybyn_ana_ser<-merged_ana_ser[7,3:670]*merged_ana_ser[14,3:670]
+Pisquareinto_n_minus_1_ana_ser<-multiplybyn_ana_ser - 1
+n_1_ana_ser<- merged_ana_ser[7,3:670]-1
+FAA_ana_ser<-Pisquareinto_n_minus_1_ana_ser/n_1_ana_ser
+ENC_AA_ana_ser<-1/FAA_ana_ser 
+write.csv(ENC_AA_ana_ser, "ENCX_ana_ser.csv")
+
+ana_ile<-subset(ana_eff,Amino_acid=="Ile")
+summed_ana_ile<-ana_ile %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "Total"))) #does the total of all the columns that are numeric...non-numerics gets the word Total
+gettingPi_ana_ile<-ana_ile %>%
+  mutate_if(is.numeric, funs(./sum(.))) # tile is better...we dont even need to do the sum..tile gives a matrix with the pi's where the ni's were
+squaringPi_ana_ile<- gettingPi_ana_ile %>%
+  mutate_if(is.numeric,funs(.*.))
+sumsofsquares_ana_ile<- squaringPi_ana_ile %>%
+  bind_rows(summarise_all(., funs(if(is.numeric(.)) sum(.) else "squared_Total")))
+merged_ana_ile<-rbind(summed_ana_ile,sumsofsquares_ana_ile)
+multiplybyn_ana_ile<-merged_ana_ile[7,3:670]*merged_ana_ile[14,3:670]
+Pisquareinto_n_minus_1_ana_ile<-multiplybyn_ana_ile - 1
+n_1_ana_ile<- merged_ana_ile[7,3:670]-1
+FAA_ana_ile<-Pisquareinto_n_minus_1_ana_ile/n_1_ana_ile
+ENC_AA_ana_ile<-1/FAA_ana_ile 
+write.csv(ENC_AA_ana_ile, "ENCX_ana_ile.csv")
+
+# do this for each species (go to notepad and replace the previous species name with the new one)
+#The output files are the ENC_X value of one aminoacid per species (a total of 29*18 files will be generated)
+#each file will have 668 values...the ENC_X for every orthologous gene
+
+#but these are the ENC_X files...they have to be data normalized for comparison with each other...depending on their degeneracy amino acids have ENC_X values so u cannot compare the ENC_ value of a two fold degenerate amino aicd with a four or six foeld degenerate amino acid.
+
+#Convert the values to the normalized value between 0 and 1 (done in excel, then take a final average....this way you will have 1 SENC_X value for each aminoacid and species)...your final SENCX table will have 29 columns for the species and 18 rows for the aminoacids.
+#the SENC_X values are provided in Supplementary Table 3
+#Sort the file based on their codon degenracy and then the dinulceotides in the 2nd and 3rd position.
+
+#plotting the SENC_X values
+#these give the chart with usage of codons
+AT_AC_2fold <- read_csv("AT_versus_AC_2fold.csv")
+
+twofold_AT_AC_melt<-melt(AT_AC_2fold)
+ggplot(twofold_AT_AC_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+  #ggtitle("2-fold degenerate amino acids (codons ending with'AU'/'AC')")+theme(plot.title = element_text(lineheight=.3))+
+    xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+AA_AG_2fold <- read_csv("AA_versus_AG_2fold.csv")
+
+twofold_AA_AG_melt<-melt(AA_AG_2fold)
+ggplot(twofold_AA_AG_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+    xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 14, face = "bold"))+
+  #ggtitle("2-fold degenerate amino acids (codons ending with'AA'/'AG')")+theme(plot.title = element_text(lineheight=.3))+
+ theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+wobble_fourfold <- read_csv("wobble_fourfold.csv")
+
+wobble_fourfold_melt<-melt(wobble_fourfold)
+ggplot(wobble_fourfold_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3.5)+geom_line(size=1.25)+
+  #ggtitle("4-fold degenerate amino acids")+theme(plot.title = element_text(lineheight=.3))+
+    xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 16, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+pro_thr_CC <- read_csv("pro_thr_CC.csv")
+pro_thr_CC_melt<-melt(pro_thr_CC)
+ggplot(pro_thr_CC_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+  xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 16, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+wobble_sixfold <- read_csv("wobble_sixfold.csv")
+
+wobble_sixfold_melt<-melt(wobble_sixfold)
+ggplot(wobble_sixfold_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+  ggtitle("6-fold degenerate amino acids")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 16, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=14, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+cys_phe_ile <- read_csv("cys_phe_ile.csv")
+
+cys_phe_ile_melt<-melt(cys_phe_ile)
+ggplot(cys_phe_ile_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+  ggtitle("2/3-fold degenerate amino acids")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 16, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=14, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+gly_arg_ser <- read_excel("gly_arg_ser_SENCX.xlsx")
+
+gly_arg_ser_melt<-melt(gly_arg_ser)
+ggplot(gly_arg_ser_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoacid)) +
+  geom_point(shape=20, size=3)+geom_line(size=1.25)+
+  #ggtitle("2-fold degenerate amino acids (codons ending with'AU'/'AC')")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean sENC-X")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+  theme(axis.text.y   = element_text(size=12,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+
+#calculating dinucleotide preference at the 2nd and 3rd codon position
+sdu_ortho_ananassae_pos2 = dinuq.SDU("ananassae_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_ananassae_pos2, "sdu_ortho_ananassae_pos2", error = 'none')
+sdu_ortho_arizonae_pos2 = dinuq.SDU("arizonae_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_arizonae_pos2, "sdu_ortho_arizonae_pos2", error = 'none')
+sdu_ortho_biarmipes_pos2 = dinuq.SDU("biarmipes_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_biarmipes_pos2, "sdu_ortho_biarmipes_pos2", error = 'none')
+sdu_ortho_bipectinata_pos2 = dinuq.SDU("bipectinata_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_bipectinata_pos2, "sdu_ortho_bipectinata_pos2", error = 'none')
+sdu_ortho_busckii_pos2 = dinuq.SDU("busckii_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_busckii_pos2, "sdu_ortho_busckii_pos2", error = 'none')
+sdu_ortho_elegans_pos2 = dinuq.SDU("elegans_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_elegans_pos2, "sdu_ortho_elegans_pos2", error = 'none')
+sdu_ortho_erecta_pos2 = dinuq.SDU("erecta_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_erecta_pos2, "sdu_ortho_erecta_pos2", error = 'none')
+sdu_ortho_eugracilis_pos2 = dinuq.SDU("eugracilis_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_eugracilis_pos2, "sdu_ortho_eugracilis_pos2", error = 'none')
+sdu_ortho_ficusphila_pos2 = dinuq.SDU("ficusphila_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_ficusphila_pos2, "sdu_ortho_ficusphila_pos2", error = 'none')
+sdu_ortho_grimshawi_pos2 = dinuq.SDU("grimshawi_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_grimshawi_pos2, "sdu_ortho_grimshawi_pos2", error = 'none')
+sdu_ortho_hydei_pos2 = dinuq.SDU("hydei_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_hydei_pos2, "sdu_ortho_hydei_pos2", error = 'none')
+sdu_ortho_kikkawai_pos2 = dinuq.SDU("kikkawai_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_kikkawai_pos2, "sdu_ortho_kikkawai_pos2", error = 'none')
+sdu_ortho_miranda_pos2 = dinuq.SDU("miranda_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_miranda_pos2, "sdu_ortho_miranda_pos2", error = 'none')
+sdu_ortho_mojavensis_pos2 = dinuq.SDU("mojavensis_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_mojavensis_pos2, "sdu_ortho_mojavensis_pos2", error = 'none')
+sdu_ortho_navojoa_pos2 = dinuq.SDU("navojoa_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_navojoa_pos2, "sdu_ortho_navojoa_pos2", error = 'none')
+sdu_ortho_bipectinata_pos2 = dinuq.SDU("bipectinata_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_bipectinata_pos2, "sdu_ortho_bipectinata_pos2", error = 'none')
+sdu_ortho_novamexicana_pos2 = dinuq.SDU("novamexicana_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_novamexicana_pos2, "sdu_ortho_novamexicana_pos2", error = 'none')
+sdu_ortho_obscura_pos2 = dinuq.SDU("obscura_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_obscura_pos2, "sdu_ortho_obscura_pos2", error = 'none')
+sdu_ortho_persimilis_pos2 = dinuq.SDU("persimilis_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_persimilis_pos2, "sdu_ortho_persimilis_pos2", error = 'none')
+sdu_ortho_pseudoobscura_pos2 = dinuq.SDU("pseudoobscura_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_pseudoobscura_pos2, "sdu_ortho_pseudoobscura_pos2", error = 'none')
+sdu_ortho_rhopaloa_pos2 = dinuq.SDU("rhopaloa_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_rhopaloa_pos2, "sdu_ortho_rhopaloa_pos2", error = 'none')
+sdu_ortho_sechellia_pos2 = dinuq.SDU("sechellia_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_sechellia_pos2, "sdu_ortho_sechellia_pos2", error = 'none')
+sdu_ortho_serrata_pos2 = dinuq.SDU("serrata_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_serrata_pos2, "sdu_ortho_serrata_pos2", error = 'none')
+sdu_ortho_simulans_pos2 = dinuq.SDU("simulans_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_simulans_pos2, "sdu_ortho_simulans_pos2", error = 'none')
+sdu_ortho_suzukii_pos2 = dinuq.SDU("suzukii_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_suzukii_pos2, "sdu_ortho_suzukii_pos2", error = 'none')
+sdu_ortho_takahashii_pos2 = dinuq.SDU("takahashii_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_takahashii_pos2, "sdu_ortho_takahashii_pos2", error = 'none')
+sdu_ortho_virilis_pos2 = dinuq.SDU("virilis_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_virilis_pos2, "sdu_ortho_virilis_pos2", error = 'none')
+sdu_ortho_willistoni_pos2 = dinuq.SDU("willistoni_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_willistoni_pos2, "sdu_ortho_willistoni_pos2", error = 'none')
+sdu_ortho_yakuba_pos2 = dinuq.SDU("yakuba_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
+dinuq.dict_to_tsv(sdu_ortho_yakuba_pos2, "sdu_ortho_yakuba_pos2", error = 'none')
+
+Just like with RSCU...I have used excel to calculate the average SDU values for all the 668 genes and have merged all the species together to have 29 columns and 16 possible dinucleotides The file is saved as Supplementary table 4.
+These files and then sorted and saved to create files that are specific for the nucleotide at the second position.
+
+
+# plotting the SDU values (Figure 4)
+library(plyr)
+library(reshape2)
+library(qpcR)
+library(seqinr)
+library(coRdon)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+#install.packages("ggdendro")
+#install.packages("dendextend")
+library(ggdendro)
+library(dendextend)
+
+
+SDU_pos2_2ndC<- read_csv(file="SDU_values_phylo_final_2ndC.csv")# this is now a file with species in phylo order
+SDU_pos2_2nd_C_melt<-melt(SDU_pos2_2ndC) # melting the table
+ggplot(SDU_pos2_2nd_C_melt, aes(x=variable, y=value, color=Dinucleotide23, group=Dinucleotide23)) +
+  geom_point(shape=20, size=3.5)+geom_line(size=1.25)+
+  #ggtitle("Codon position 2")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean SDU")+theme(legend.text = element_text(colour="black", size = 11, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=12, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+SDU_pos2_2ndG<- read_csv(file="SDU_values_phylo_final_2ndG.csv")# this is now a file with species in phylo order
+SDU_pos2_2nd_G_melt<-melt(SDU_pos2_2ndG) # melting the table
+ggplot(SDU_pos2_2nd_G_melt, aes(x=variable, y=value, color=Dinucleotide23, group=Dinucleotide23)) +
+  geom_point(shape=20, size=3.5)+geom_line(size=1.25)+
+  #ggtitle("Codon position 2")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean SDU")+theme(legend.text = element_text(colour="black", size = 11, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=12, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+
+
+
+SDU_pos2_2ndA<- read_csv(file="SDU_values_phylo_final_2ndA.csv")# this is now a file with species in phylo order
+SDU_pos2_2nd_A_melt<-melt(SDU_pos2_2ndA) # melting the table
+ggplot(SDU_pos2_2nd_A_melt, aes(x=variable, y=value, color=Dinucleotide23, group=Dinucleotide23)) +
+  geom_point(shape=20, size=3.5)+geom_line(size=1.25)+
+  #ggtitle("Codon position 2")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean SDU")+theme(legend.text = element_text(colour="black", size = 11, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=12, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+SDU_pos2_2ndU<- read_csv(file="SDU_values_phylo_final_2ndU.csv")# this is now a file with species in phylo order
+SDU_pos2_2nd_U_melt<-melt(SDU_pos2_2ndU) # melting the table
+ggplot(SDU_pos2_2nd_U_melt, aes(x=variable, y=value, color=Dinucleotide23, group=Dinucleotide23)) +
+  geom_point(shape=20, size=3.5)+geom_line(size=1.25)+
+  #ggtitle("Codon position 2")+theme(plot.title = element_text(lineheight=.3))+
+  xlab("Species") + ylab("Mean SDU")+theme(legend.text = element_text(colour="black", size = 11, face = "bold"))+
+  theme(legend.title = element_text(colour="black", size=12, face="bold"))+
+  theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.title.y  = element_text(size=14),
+        axis.title.x  = element_text(size=14),
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+
+# statistics
+
+#The GC content for coding sequences and ENC for coding sequences copied into GCversusENC
+GC_ENC <- read_excel("GCversusENC.xlsx") #getting the data
+cor.test(GC_ENC$GC,GC_ENC$NEWENC, method="pearson")
+
+# Mann Whitney to prove that the RSCU are significantly differnet 
+RSCU_subgenus <- read_excel("Supplementary_table_2.xlsx") #getting the data
+RSCU_subgenus_withoutDorsilopha <- subset(RSCU_subgenus, subgenus=="Drosophila",subgenus == "Sophophora")
+wilcox.test(RSCU_subgenus_withoutDorsilopha$UGC~subgenus,data= RSCU_subgenus_withoutDorsilopha) # this gives Mann whitney for the cysteine preferred codon UGC
+
+
+# Mann Whitney to prove that the ENC values in ortholgouos genes is diff between subgenera
+ENC_subgenus <-read_excel("StatsforCUBENC_subgenusmannwhitney.xlsx")
+wilcox.test(ENC_subgenus$ENC_CDS~ENC_subgenus$Subgenus, data=ENC_subgenus)# not significant
+wilcox.test(ENC_subgenus$ENC_ortho~ENC_subgenus$Subgenus, data=ENC_subgenus)# significant
+
+
+
+
