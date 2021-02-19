@@ -1524,6 +1524,8 @@ ggplot(gly_arg_ser_melt, aes(x=variable, y=value, color=Aminoacid, group=Aminoac
 
 
 #calculating dinucleotide preference at the 2nd and 3rd codon position
+Using pip, in a Unix terminal do: pip install dinuq
+Then in python do: import dinuq
 sdu_ortho_ananassae_pos2 = dinuq.SDU("ananassae_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
 dinuq.dict_to_tsv(sdu_ortho_ananassae_pos2, "sdu_ortho_ananassae_pos2", error = 'none')
 sdu_ortho_arizonae_pos2 = dinuq.SDU("arizonae_ortho.fasta", dinucl= ['CpC', 'CpG', 'CpU', 'CpA', 'GpC', 'GpG', 'GpU', 'GpA', 'UpC', 'UpG', 'UpU', 'UpA', 'ApC', 'ApG', 'ApU', 'ApA'], position = ['pos2'], samples = 'none')
