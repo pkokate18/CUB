@@ -2167,6 +2167,61 @@ for (i in 1:n) {
 
 write.csv(final_tableSDU_lambda, "Pagel_lambda_forSDUwithstandarderror.csv") # PRUNED TO MAKE TABLE 6
 
+####CORRESPONDENCE ANALYSIS
+library(ggrepel)
+library(ca)
+library(rstatix)
+library(factoextra)
+library(FactoMineR)
+library(fBasics)
+library(readxl)
+library(ade4)
+library(plyr)
+library(reshape2)
+library(qpcR)
+library(ORFik)
+library(seqinr)
+library(coRdon)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+setwd("home/Special_topics/") # home laptop...go to sesssion .....
+getwd()
+rm(list = ls())
+
+
+
+RSCU_mean<-read_csv("reviewers_phylogenyimproved_RSCUmeans_shortspeciesnames.csv")
+RSCU_mean<-as.data.frame(RSCU_mean)
+rownames(RSCU_mean)<-RSCU_mean[,2]
+RSCU_mean[,c(1:2)]<-NULL
+cats = apply(RSCU_mean, 2,function(x) nlevels(as.factor(x))) 
+
+
+
+mca1 = CA(RSCU_mean, graph = FALSE)
+plot(mca1)
+mca1$eig
+mca1_vars_df = data.frame(mca1$row$coord, Variable = rep(names(cats), cats))
+mca1_obs_df = data.frame(mca1$col$coord)
+species_info<-read_csv("subspecies_info.csv")
+MCA_OBS_DF<-cbind(mca1_obs_df,species_info)
+
+#this is the final one
+    ggplot(data=MCA_OBS_DF,aes(x = Dim.1, y = Dim.2), label=rownames(MCA_OBS_DF))+
+      geom_point(color=MCA_OBS_DF$Color, pch=20,size=3) +geom_text(aes(label=rownames(MCA_OBS_DF)),size=3.0, hjust=0, vjust=0,position=position_jitter(width=0.03,height=0.03))+
+      xlab("Dim 1 (75.92%)") + ylab("Dim 2 (16.86%)")+ggtitle("Correspondence analysis")+
+      theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+      theme(legend.title = element_text(colour="black", size=16, face="bold"))+
+      theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
+            axis.text.x   = element_text(size=10,face="bold",color="black"),
+            axis.title.y  = element_text(size=14),
+            axis.title.x  = element_text(size=14),
+            axis.line = element_line(colour = "black"),
+            panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE) # points NOT JITTERED
+    
+
+#####################################################################################################################################
 
 
 
