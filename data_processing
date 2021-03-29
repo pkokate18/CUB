@@ -837,251 +837,568 @@ yak_ortho_R_rscu<-read_csv("yak_ortho_R.rscu.csv")
 
 
 # go to ortho_sequences for these ones...u can copy the code above to get a heatmap...but no fun in that
-orthologues_average_RSCU<- read_csv(file="RSCU_allspecies_improvedphylo.csv")
+RSCU_mean<-read_csv("reviewers_phylogenyimproved_RSCUmeans_shortspeciesnames.csv")
+RSCU_stdev<-read_excel("reviewers_phylogenyimproved_RSCUstdev_shortspeciesnames.xlsx")
+RSCU_mean_melt<-melt(RSCU_mean)
+RSCU_mean_melt<-as.data.frame(RSCU_mean_melt)
+RSCU_mean_melt<-RSCU_mean_melt %>% rename(Species=variable)
+
+RSCU_stdev_melt<-melt(RSCU_stdev)
+RSCU_stdev_melt<-as.data.frame(RSCU_stdev_melt)
+RSCU_stdev_melt<-RSCU_stdev_melt %>% rename(stdev=value)
+RSCU_stdev_melt<-RSCU_stdev_melt %>% rename(not_needed1=variable)
+RSCU_stdev_melt<-RSCU_stdev_melt %>% rename(not_needed2=codon)
+#RSCU_stdev_melt<-RSCU_stdev_melt %>% rename(not_needed3=amino acid)#never leave a space in any name...thankfully the aminoacid column names are different
+RSCU_startworking<-cbind(RSCU_mean_melt,RSCU_stdev_melt)
+RSCU_startworking<-as.data.frame(RSCU_startworking)
 
 
-#working with each amino acid
-ala_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ala')
-ala_RSCU_melt<-melt(ala_RSCU)
-ggplot(ala_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + 
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+
+
+
+##########PROBABLY THE SHADING TO ENHANCE THE IMAGE...but otherwise set
+Ala_RSCU<-subset(RSCU_startworking, Amino_acid=='Ala')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Ala_RSCU$Species<-as.character(Ala_RSCU$Species)
+Ala_RSCU$Species<-factor(Ala_RSCU$Species, levels=unique(Ala_RSCU$Species))
+ggplot(Ala_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Alanine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
 
-
-arg_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Arg')
-arg_RSCU_melt<-melt(arg_RSCU)
-ggplot(arg_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Arginine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Arg_RSCU<-subset(RSCU_startworking, Amino_acid=='Arg')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Arg_RSCU$Species<-as.character(Arg_RSCU$Species)
+Arg_RSCU$Species<-factor(Arg_RSCU$Species, levels=unique(Arg_RSCU$Species))
+ggplot(Arg_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Arginine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-asn_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Asn')
-asn_RSCU_melt<-melt(asn_RSCU)
-ggplot(asn_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Asparagine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Asn_RSCU<-subset(RSCU_startworking, Amino_acid=='Asn')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Asn_RSCU$Species<-as.character(Asn_RSCU$Species)
+Asn_RSCU$Species<-factor(Asn_RSCU$Species, levels=unique(Asn_RSCU$Species))
+ggplot(Asn_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Asparagine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-asp_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Asp')
-asp_RSCU_melt<-melt(asp_RSCU)
-ggplot(asp_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Aspartic Acid")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Asp_RSCU<-subset(RSCU_startworking, Amino_acid=='Asp')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Asp_RSCU$Species<-as.character(Asp_RSCU$Species)
+Asp_RSCU$Species<-factor(Asp_RSCU$Species, levels=unique(Asp_RSCU$Species))
+ggplot(Asp_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Aspartic Acid") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-
-cys_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Cys')
-cys_RSCU_melt<-melt(cys_RSCU)
-ggplot(cys_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Cysteine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Cys_RSCU<-subset(RSCU_startworking, Amino_acid=='Cys')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Cys_RSCU$Species<-as.character(Cys_RSCU$Species)
+Cys_RSCU$Species<-factor(Cys_RSCU$Species, levels=unique(Cys_RSCU$Species))
+ggplot(Cys_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Cysteine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-gln_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Gln')
-gln_RSCU_melt<-melt(gln_RSCU)
-ggplot(gln_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Glutamine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Gln_RSCU<-subset(RSCU_startworking, Amino_acid=='Gln')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Gln_RSCU$Species<-as.character(Gln_RSCU$Species)
+Gln_RSCU$Species<-factor(Gln_RSCU$Species, levels=unique(Gln_RSCU$Species))
+ggplot(Gln_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Glutamine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-
-glu_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Glu')
-glu_RSCU_melt<-melt(glu_RSCU)
-ggplot(glu_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Glutamic Acid")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Glu_RSCU<-subset(RSCU_startworking, Amino_acid=='Glu')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Glu_RSCU$Species<-as.character(Glu_RSCU$Species)
+Glu_RSCU$Species<-factor(Glu_RSCU$Species, levels=unique(Glu_RSCU$Species))
+ggplot(Glu_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Glutamic Acid") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-gly_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Gly')
-gly_RSCU_melt<-melt(gly_RSCU)
-ggplot(gly_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Glycine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Gly_RSCU<-subset(RSCU_startworking, Amino_acid=='Gly')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Gly_RSCU$Species<-as.character(Gly_RSCU$Species)
+Gly_RSCU$Species<-factor(Gly_RSCU$Species, levels=unique(Gly_RSCU$Species))
+ggplot(Gly_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Glycine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-his_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='His')
-his_RSCU_melt<-melt(his_RSCU)
-ggplot(his_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Histidine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+His_RSCU<-subset(RSCU_startworking, Amino_acid=='His')# this is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+His_RSCU$Species<-as.character(His_RSCU$Species)
+His_RSCU$Species<-factor(His_RSCU$Species, levels=unique(His_RSCU$Species))
+ggplot(His_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Histidine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-ile_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ile')
-ile_RSCU_melt<-melt(ile_RSCU)
-ggplot(ile_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Isoleucine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Ile_RSCU<-subset(RSCU_startworking, Amino_acid=='Ile')# tIle is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Ile_RSCU$Species<-as.character(Ile_RSCU$Species)
+Ile_RSCU$Species<-factor(Ile_RSCU$Species, levels=unique(Ile_RSCU$Species))
+ggplot(Ile_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Isoleucine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-leu_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Leu')
-leu_RSCU_melt<-melt(leu_RSCU)
-ggplot(leu_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Leucine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Leu_RSCU<-subset(RSCU_startworking, Amino_acid=='Leu')# tLeu is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Leu_RSCU$Species<-as.character(Leu_RSCU$Species)
+Leu_RSCU$Species<-factor(Leu_RSCU$Species, levels=unique(Leu_RSCU$Species))
+ggplot(Leu_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Leucine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-
-lys_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Lys')
-lys_RSCU_melt<-melt(lys_RSCU)
-ggplot(lys_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Lysine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Lys_RSCU<-subset(RSCU_startworking, Amino_acid=='Lys')# tLys is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Lys_RSCU$Species<-as.character(Lys_RSCU$Species)
+Lys_RSCU$Species<-factor(Lys_RSCU$Species, levels=unique(Lys_RSCU$Species))
+ggplot(Lys_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Lysine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-phe_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Phe')
-phe_RSCU_melt<-melt(phe_RSCU)
-ggplot(phe_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Phenylalanine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Phe_RSCU<-subset(RSCU_startworking, Amino_acid=='Phe')# tPhe is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Phe_RSCU$Species<-as.character(Phe_RSCU$Species)
+Phe_RSCU$Species<-factor(Phe_RSCU$Species, levels=unique(Phe_RSCU$Species))
+ggplot(Phe_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Phenylalanine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-pro_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Pro')
-pro_RSCU_melt<-melt(pro_RSCU)
-ggplot(pro_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Proline")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Pro_RSCU<-subset(RSCU_startworking, Amino_acid=='Pro')# tPro is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Pro_RSCU$Species<-as.character(Pro_RSCU$Species)
+Pro_RSCU$Species<-factor(Pro_RSCU$Species, levels=unique(Pro_RSCU$Species))
+ggplot(Pro_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Proline") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-ser_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Ser')
-ser_RSCU_melt<-melt(ser_RSCU)
-ggplot(ser_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Serine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Ser_RSCU<-subset(RSCU_startworking, Amino_acid=='Ser')# tSer is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Ser_RSCU$Species<-as.character(Ser_RSCU$Species)
+Ser_RSCU$Species<-factor(Ser_RSCU$Species, levels=unique(Ser_RSCU$Species))
+ggplot(Ser_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Serine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-
-thr_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Thr')
-thr_RSCU_melt<-melt(thr_RSCU)
-ggplot(thr_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Threonine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Thr_RSCU<-subset(RSCU_startworking, Amino_acid=='Thr')# tThr is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Thr_RSCU$Species<-as.character(Thr_RSCU$Species)
+Thr_RSCU$Species<-factor(Thr_RSCU$Species, levels=unique(Thr_RSCU$Species))
+ggplot(Thr_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Threonine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-tyr_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Tyr')
-tyr_RSCU_melt<-melt(tyr_RSCU)
-ggplot(tyr_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Tyrosine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Tyr_RSCU<-subset(RSCU_startworking, Amino_acid=='Tyr')# tTyr is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Tyr_RSCU$Species<-as.character(Tyr_RSCU$Species)
+Tyr_RSCU$Species<-factor(Tyr_RSCU$Species, levels=unique(Tyr_RSCU$Species))
+ggplot(Tyr_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Tyrosine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-val_RSCU<-subset(orthologues_average_RSCU,orthologues_average_RSCU$Amino_acid=='Val')
-val_RSCU_melt<-melt(val_RSCU)
-ggplot(val_RSCU_melt, aes(x=variable, y=value, color=codon)) +
-  geom_point(shape=20, size=10) + ggtitle("Valine")+theme(plot.title = element_text(lineheight=.3))+
-  xlab("Species") + ylab("RSCU")+theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
+Val_RSCU<-subset(RSCU_startworking, Amino_acid=='Val')# tVal is interesting...the old RSCU plotting worked with RSCU_startworking$AMino_acid, now it needs the dataframe and the column name separated by a comma...who would have thought.
+Val_RSCU$Species<-as.character(Val_RSCU$Species)
+Val_RSCU$Species<-factor(Val_RSCU$Species, levels=unique(Val_RSCU$Species))
+ggplot(Val_RSCU,aes(x=Species, y= value, color = codon)) +geom_point(shape=20, size=10) +  
+  ggtitle("Valine") + 
+  geom_errorbar((aes(ymin=value-stdev, ymax=value+stdev, group = codon, width=0.2)))+xlab("Species") + ylab("mean RSCU")+
+  annotate("rect",xmin = 0.5, xmax = 1.5, ymin = -Inf, ymax = +Inf, fill = "darkviolet", alpha = 0.2) +
+  annotate("rect",xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = +Inf, fill = "darkmagenta", alpha = 0.2) +
+  annotate("rect",xmin = 2.5, xmax = 4.5, ymin = -Inf, ymax = +Inf, fill = "blueviolet", alpha = 0.2) +
+  annotate("rect",xmin = 4.5, xmax = 5.5, ymin = -Inf, ymax = +Inf, fill = "blue", alpha = 0.2) +
+  annotate("rect",xmin = 5.5, xmax = 8.5, ymin = -Inf, ymax = +Inf, fill = "cornflowerblue", alpha = 0.2) +
+  annotate("rect",xmin = 8.5, xmax = 9.5, ymin = -Inf, ymax = +Inf, fill = "lightpink", alpha = 0.2) +
+  annotate("rect",xmin = 9.5, xmax = 13.5, ymin = -Inf, ymax = +Inf, fill = "palegreen", alpha = 0.2) +
+  annotate("rect",xmin = 13.5, xmax = 15.5, ymin = -Inf, ymax = +Inf, fill = "darkgoldenrod1", alpha = 0.2) +
+  annotate("rect",xmin = 15.5, xmax = 17.5, ymin = -Inf, ymax = +Inf, fill = "chartreuse", alpha = 0.2) +
+  annotate("rect",xmin = 17.5, xmax = 18.5, ymin = -Inf, ymax = +Inf, fill = "darkolivegreen1", alpha = 0.2) +
+  annotate("rect",xmin = 18.5, xmax = 19.5, ymin = -Inf, ymax = +Inf, fill = "darkseagreen", alpha = 0.2) +
+  annotate("rect",xmin = 19.5, xmax = 20.5, ymin = -Inf, ymax = +Inf, fill = "darkgreen", alpha = 0.2) +
+  annotate("rect",xmin = 20.5, xmax = 21.5, ymin = -Inf, ymax = +Inf, fill = "darkgrey", alpha = 0.2) +
+  annotate("rect",xmin = 21.5, xmax = 26.5, ymin = -Inf, ymax = +Inf, fill = "darkkhaki", alpha = 0.2) +
+  annotate("rect",xmin = 27.5, xmax = 29.5, ymin = -Inf, ymax = +Inf, fill = "yellow", alpha = 0.2) +
+  theme(legend.text = element_text(colour="black", size = 15, face = "bold"))+
   theme(legend.title = element_text(colour="black", size=16, face="bold"))+
   theme(axis.text.y   = element_text(size=10,face="bold",color="black"),
-        axis.text.x   = element_text(size=10,face="bold",color="black"),
+        axis.text.x   = element_text(size=9,face="bold",color="black", angle=45, hjust=0, vjust=0),
         axis.title.y  = element_text(size=14),
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
 
-
+######################################################################################################
 #SENC_X calculation
 #the same RSCU files for each speices withthe orthologous genes was now cleaned to remove the rscu values but keep the eff values that are required for calculating SENC_X
 these files are saved indiviudially for each species e.g. ana_ortho_R_eff.csv
@@ -1664,6 +1981,199 @@ ggplot(SDU_pos2_2nd_U_melt, aes(x=variable, y=value, color=Dinucleotide23, group
         axis.title.x  = element_text(size=14),
         axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill=NA, size=1))+guides(size=FALSE)
+
+#phylogenetic tree
+CUB_phylo_tree<- ape::read.tree(text=' ((D.busckii:0.173629,(D.grimshawi:0.132337,((D.virilis:0.0177369,D.novamexicana:0.0188335)0.956116:0.0692985,(D.hydei:0.0560942,(D.navojoa:0.0309045,(D.mojavensis:0.0138634,D.arizonae:0.020453)0.783728:0.0171458)0.888985:0.0422516)0.869216:0.0507905)0.674669:0.0282982)0.77015:0.037346)0.870193:0.0305323,(D.willistoni:0.18334,((D.obscura:0.0595851,(D.miranda:0.0144862,(D.persimilis:0.00719127,D.pseudoobscura:0.0115459)0.5932:0.0110065)0.912123:0.0464495)0.953183:0.0931191,((D.bipectinata:0.0412953,D.ananassae:0.0380265)0.953509:0.085992,((D.serrata:0.0484191,D.kikkawai:0.0436377)0.935911:0.0705074,(D.ficusphila:0.0674888,((D.rhopaloa:0.0531322,D.elegans:0.0537741)0.634695:0.0189453,((D.eugracilis:0.0604019,((D.erecta:0.0312833,D.yakuba:0.0319242)0.528351:0.0113306,(D.melanogaster:0.0168154,(D.sechellia:0.00993917,D.simulans:0.00986726)0.746361:0.0138588)0.793287:0.023255)0.822073:0.0351367)0.198783:0.00802869,(D.takahashii:0.0512325,(D.biarmipes:0.0347003,D.suzukii:0.0500083)0.719965:0.023532)0.45264:0.0145184)0.241799:0.0113168)0.19194:0.00958961)0.759722:0.0312525)0.534434:0.0176602)0.79383:0.0398926)0.752553:0.0368086)0.870193:0.0305323);')
+#a well indented phylo tree
+plot(chronoMPL(CUB_phylo_tree))
+branched_lengths_phylotree<-compute.brlen(CUB_phylo_tree, method = "Grafen", power = 1)
+
+#Hierarchical clustering ..species and codons (FIgure 4)
+library(heatmaply)
+library(stats)
+library(phyloseq)
+
+phylo_corrected_ortho_meanRSCU<-read_csv("reviewerimprovedphylogenyRSCUmeansconduciveforlambda.csv")
+phylo_corrected_ortho_meanRSCU<-as.data.frame(phylo_corrected_ortho_meanRSCU)
+rownames(phylo_corrected_ortho_meanRSCU)<-phylo_corrected_ortho_meanRSCU$X1#convert first column (X1) intorownames
+phylo_corrected_ortho_meanRSCU<-phylo_corrected_ortho_meanRSCU %>% select (-X1) # now deleted the t
+heatmaply(phylo_corrected_ortho_meanRSCU, 
+          dendrogram = "both",
+          xlab = "Codon", ylab = "Species", 
+          main = "Relative synonymous codon usage (RSCU) analysis",
+          scale = "column",
+          margins = c(60,100,40,20),
+          grid_color = "white",
+          grid_width = 0.00001,
+          titleX = FALSE,
+          hide_colorbar = FALSE,
+          branches_lwd = 0.1,
+          label_names = c("Species", "Codon", "Value"),
+          fontsize_row = 8, fontsize_col = 8,  font='bold',labCol = colnames(phylo_corrected_ortho_meanRSCU),
+          labRow = rownames(phylo_corrected_ortho_meanRSCU),
+          heatmap_layers = theme(axis.line=element_blank())
+
+#PGLS
+ENC_GC<-read.csv("ENC_GC_PGLSCSV.csv", header=TRUE, row.names=1)
+ENC_GC$Species<-ENC_GC$Species[branched_lengths_phylotree$tip.label,] # sort data according to tree
+obj<-name.check(branched_lengths_phylotree,ENC_GC)#so this has not come form the nex file generation for the tree..but it worked :)
+bm<-corBrownian(1,branched_lengths_phylotree)
+#No loop
+A<-ENC_GC[,1]#gc CDS
+B<-ENC_GC[,2]# ENC CDS
+P<-ENC_GC[,3]# GC SCO
+Q<-ENC_GC[,4]# ENC SCO
+glsquares<-gls(B~A,correlation = bm);# FOR cds
+glsquares_pq<-gls(Q~P,correlation = bm);#for sco
+PGLSGCvsENC[1,2]<-summary(glsquares)$sigma;
+PGLSGCvsENC[1,3]<-summary(glsquares)$AIC;
+PGLSGCvsENC[1,4]<-summary(glsquares)$BIC;
+PGLSGCvsENC[1,5]<-summary(glsquares)$logLik;
+PGLSGCvsENC[1,c(6:9)]<-summary(glsquares)$corBeta;
+PGLSGCvsENC[1,c(10:17)]<-summary(glsquares)$tTable;
+PGLSGCvsENC[1,c(18:21)]<-summary(glsquares)$varBeta;
+PGLSGCvsENC[3,2]<-summary(glsquares_pq)$sigma;
+PGLSGCvsENC[3,3]<-summary(glsquares_pq)$AIC;
+PGLSGCvsENC[3,4]<-summary(glsquares_pq)$BIC;
+PGLSGCvsENC[3,5]<-summary(glsquares_pq)$logLik;
+PGLSGCvsENC[3,c(6:9)]<-summary(glsquares_pq)$corBeta;
+PGLSGCvsENC[3,c(10:17)]<-summary(glsquares_pq)$tTable;
+PGLSGCvsENC[3,c(18:21)]<-summary(glsquares_pq)$varBeta;
+
+
+write.csv(PGLSGCvsENC, "glsGccontentversusENC.csv") # THIS TABLE IS TRIMMED TO CREATE TABLE 2.
+summary(glsquares)
+summary(glsquares_pq)
+###further statistics and alternative to bm # replace P and Q with A and B to get the CDS regression
+mat<-vcv(branched_lengths_phylotree,corr=TRUE)
+fit<-gls(Q~P, correlation=corSymm(mat[lower.tri(mat)],fixed=TRUE))
+
+summary(fit)
+fit2<-gls(Q~P, correlation=bm)# this doesnt take the fixed argument 
+anova(fit,fit2)
+plot(fit2, resid(., type="n")~fitted(.), main="Normalized Residuals v Fitted Values",
+     abline=c(0,0))
+res <- resid(fit2, type="n")
+qqnorm(res)
+qqline(res)
+
+summary(fit2)
+
+#CALCULATE STANDARD ERROR REQUIRED FOR PAGEL'S LAMBDA CODE
+###########################################################################
+
+
+#calculating standard error for RSCU
+RSCU_ortho_stdev<-read.csv("reviewersimprovedphylogenyRSCUstdevconduciveforlambda.csv", row.names=1, header=TRUE)
+standarderrortable<-array(0:0,dim=c(30,60))
+standarderrortable<-as.data.frame(standarderrortable)
+standarderrortable[c(2:30),1]<-rownames(RSCU_ortho_stdev)
+standarderrortable[1,c(2:60)]<-colnames(RSCU_ortho_stdev)
+m<-sqrt(668)
+n<-60
+q<-30
+for (i in 2:q) {
+  for (j in 2:n) {
+    standarderrortable[i,j]<-RSCU_ortho_stdev[i-1,j-1]/m
+    j+1 }
+  i+1}
+
+
+write.csv(standarderrortable, "RSCUstderror.csv")
+
+#############################################
+#CALCULATING STD ERROR FOR SDU VALUES
+SDU_ortho_stdev<-read.csv("reviewerimprovedphylogeny_SDU_stdevconduciveforlambda.csv", row.names=1, header=TRUE)
+standarderrortable_1<-array(0:0,dim=c(30,17))
+standarderrortable_1<-as.data.frame(standarderrortable)
+standarderrortable_1[c(2:30),1]<-rownames(SDU_ortho_stdev)
+standarderrortable_1[1,c(2:17)]<-colnames(SDU_ortho_stdev)
+m<-sqrt(668)
+n<-17
+q<-30
+for (i in 2:q) {
+  for (j in 2:n) {
+    standarderrortable_1[i,j]<-SDU_ortho_stdev[i-1,j-1]/m
+    j+1 }
+  i+1}
+
+
+write.csv(standarderrortable_1, "SDUstderror.csv")
+
+##################################################################################
+pAGELS LAMBDA FOR MEAN RSCU
+#Pagels lambda for RSCU with standard error
+phylo_corrected_ortho_RSCU<-read.csv("reviewerimprovedphylogenyRSCUmeansconduciveforlambda.csv", row.names=1)
+RSCU_stderror<-read.csv("RSCUstderror.csv",row.names=1)
+final_tableRSCU_lambda<-array(0:0,dim=c(59,8))
+final_tableRSCU_lambda<-as.data.frame(final_tableRSCU_lambda)
+rownames<-t(colnames(phylo_corrected_ortho_RSCU))
+rownames<-as.character(rownames)
+rownames<-as.data.frame(rownames)
+conduciverownames<-t(rownames)
+conduciverownames<-as.data.frame(conduciverownames)
+final_tableRSCU_lambda[c(1:59),1]<-t(conduciverownames)
+n<-59
+
+for (i in 1:n) {
+  stderror<-RSCU_stderror[,i]
+  names(stderror)<-rownames(RSCU_stderror)
+  final_tableRSCU_lambda[i,c(2:8)]<-phylosig(branched_lengths_phylotree, setNames(phylo_corrected_ortho_RSCU[,i],rownames(phylo_corrected_ortho_RSCU)), method="lambda", se= stderror, test=TRUE)
+  i=i+1}
+
+
+
+write.csv(final_tableRSCU_lambda, "Pagel_lambda_forRSCUwithstandarderror.csv")# PRUNED TO GET TABLE 4
+###########
+#FOR SENCX
+
+phylo_corrected_ortho_sENCX<-read.csv("reviewer_phylogenyimproved_sENCXascsv.csv", row.names=1)
+final_tablesENCX_lambda<-array(0:0,dim=c(18,5))
+final_tablesENCX_lambda<-as.data.frame(final_tablesENCX_lambda)
+rownames<-t(colnames(phylo_corrected_ortho_sENCX))
+rownames<-as.character(rownames)
+rownames<-as.data.frame(rownames)
+conduciverownames<-t(rownames)
+conduciverownames<-as.data.frame(conduciverownames)
+final_tablesENCX_lambda[c(1:18),1]<-t(conduciverownames)
+n<-18
+
+for (i in 1:n) {
+  final_tablesENCX_lambda[i,c(2:5)]<-phylosig(branched_lengths_phylotree, setNames(phylo_corrected_ortho_sENCX[,i],rownames(phylo_corrected_ortho_sENCX)), method="lambda", test=TRUE)
+  i=i+1}
+
+write.csv(final_tablesENCX_lambda, "Pagel_lambda_forsENCX.csv")# PRUNED TO MAKE TABLE 5
+################################
+
+phylo_corrected_ortho_SDU<-read.csv("reviewerimprovedphylogeny_SDU_meanconduciveforlambda.csv", row.names=1)
+SDU_stderror<-read.csv("SDUstderror.csv",row.names=1)
+final_tableSDU_lambda<-array(0:0,dim=c(16,9))
+final_tableSDU_lambda<-as.data.frame(final_tableSDU_lambda)
+rownames<-t(colnames(phylo_corrected_ortho_SDU))
+rownames<-as.character(rownames)
+rownames<-as.data.frame(rownames)
+conduciverownames<-t(rownames)
+conduciverownames<-as.data.frame(conduciverownames)
+final_tableSDU_lambda[c(1:16),1]<-t(conduciverownames)
+n<-16
+
+for (i in 1:n) {
+  stderror<-SDU_stderror[,i]
+  names(stderror)<-rownames(SDU_stderror)
+  final_tableSDU_lambda[i,c(2:8)]<-phylosig(branched_lengths_phylotree, setNames(phylo_corrected_ortho_SDU[,i],rownames(phylo_corrected_ortho_SDU)), method="lambda", se= stderror, test=TRUE)
+  i=i+1}
+
+
+
+write.csv(final_tableSDU_lambda, "Pagel_lambda_forSDUwithstandarderror.csv") # PRUNED TO MAKE TABLE 6
+
+
+
+
+
+
+
+
 
 
 # statistics
